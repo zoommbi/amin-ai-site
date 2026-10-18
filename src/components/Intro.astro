@@ -1,0 +1,157 @@
+---
+// 简介区。文案为占位，阿旻后续替换。
+const focuses = [
+  { icon: '⚙️', title: 'AI 工作流', text: '把 AI 接进日常工作，让重复的事自动跑起来。（占位）' },
+  { icon: '📚', title: '教育', text: '探索 AI 时代的学习方式，做一些课外的小尝试。（占位）' },
+  { icon: '🧪', title: '小项目实践', text: '用小步快跑的方式做真实的小项目，边做边学。（占位）' },
+];
+
+const entries = [
+  { href: '#judgments', title: '我的判断', desc: '一些短小的看法，写在便签上', icon: '📝' },
+  { href: '#projects', title: '项目进展', desc: '正在推进的事，进度公开', icon: '📈' },
+];
+---
+<section id="about" class="intro">
+  <div class="container">
+    <p class="hello">你好，我是</p>
+    <h1>阿旻<span>AI</span></h1>
+    <p class="lead">
+      一个用 AI 做事、也在思考 AI 的人。这里记录我的判断和正在推进的项目。
+      <em>（占位文案，之后替换）</em>
+    </p>
+
+    <ul class="focus">
+      {focuses.map((f) => (
+        <li>
+          <span class="icon" aria-hidden="true">{f.icon}</span>
+          <div>
+            <h3>{f.title}</h3>
+            <p>{f.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <div class="entries">
+      {entries.map((e) => (
+        <a class="entry" href={e.href}>
+          <span class="icon" aria-hidden="true">{e.icon}</span>
+          <span class="txt">
+            <strong>{e.title}</strong>
+            <small>{e.desc}</small>
+          </span>
+          <span class="arrow" aria-hidden="true">↓</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .intro {
+    padding: 48px 0 24px;
+  }
+  .hello {
+    margin: 0;
+    color: var(--ink-soft);
+    font-family: var(--font-hand);
+    font-size: 1.15rem;
+  }
+  h1 {
+    font-size: 2.6rem;
+    letter-spacing: 0.02em;
+    margin: 4px 0 12px;
+  }
+  h1 span {
+    color: var(--accent);
+  }
+  .lead {
+    font-size: 1.05rem;
+    margin: 0 0 28px;
+    max-width: 36em;
+  }
+  .lead em {
+    color: var(--ink-soft);
+    font-style: normal;
+    font-size: 0.85rem;
+  }
+  .focus {
+    list-style: none;
+    margin: 0 0 28px;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+  .focus li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .focus .icon {
+    font-size: 1.4rem;
+    line-height: 1.4;
+  }
+  .focus h3 {
+    font-size: 1rem;
+  }
+  .focus p {
+    margin: 2px 0 0;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+  .entries {
+    display: grid;
+    gap: 12px;
+  }
+  .entry {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    color: var(--ink);
+    text-decoration: none;
+    transition: transform 0.15s ease;
+  }
+  .entry:hover {
+    transform: translateY(-2px);
+  }
+  .entry .icon {
+    font-size: 1.4rem;
+  }
+  .entry .txt {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+  .entry small {
+    color: var(--ink-soft);
+  }
+  .entry .arrow {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  @media (min-width: 768px) {
+    .intro {
+      padding: 88px 0 32px;
+    }
+    h1 {
+      font-size: 3.4rem;
+    }
+    .focus {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .focus li {
+      flex-direction: column;
+    }
+    .entries {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

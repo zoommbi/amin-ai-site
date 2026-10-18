@@ -1,12 +1,34 @@
 ---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Intro from '../components/Intro.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 ---
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>阿旻AI</title>
-  </head>
-  <body>
-    <h1>阿旻AI</h1>
-  </body>
-</html>
+<Base>
+  <div id="top"></div>
+  <SiteHeader />
+  <main>
+    <Intro />
+
+    <section id="judgments" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>📝 我的判断</h2>
+          <p>便签墙建设中。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>📈 项目进展</h2>
+          <p>项目卡片建设中。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第三个板块预留位置（待定） -->
+  </main>
+  <SiteFooter />
+</Base>

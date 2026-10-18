@@ -1,0 +1,104 @@
+:root {
+  --bg: #faf6ef;
+  --surface: #fffdf8;
+  --ink: #3b302a;
+  --ink-soft: #6f6259;
+  --line: #e8dfd2;
+  --accent: #c9744e;
+  --accent-soft: #f3e2d6;
+  --radius: 14px;
+  --maxw: 960px;
+  --gutter: 16px;
+  --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
+  --font-hand: "LXGW WenKai", "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif SC", serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--accent);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.3;
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section {
+  padding: 56px 0;
+  scroll-margin-top: 64px;
+}
+
+.section-head {
+  margin-bottom: 24px;
+}
+
+.section-head h2 {
+  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-head p {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 32px;
+  }
+  .section {
+    padding: 80px 0;
+  }
+  .section-head h2 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}
