@@ -1,0 +1,203 @@
+---
+import { getCollection, render } from 'astro:content';
+
+// 读取 src/content/judgments/ 下所有 Markdown，新的在前；draft: true 的不显示
+const entries = (await getCollection('judgments', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+// 柔和便签色
+const colors = ['#fff1a8', '#ffd9cf', '#d6f0d8', '#d7e8fb', '#ecdffb'];
+
+// 按 id 生成稳定的"随机"值：每次构建颜色和倾斜都一致
+function hash(str: string) {
+  let h = 0;
+  for (const ch of str) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return h;
+}
+
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
+
+const notes = await Promise.all(
+  entries.map(async (entry, i) => {
+    const h = hash(entry.id);
+    const { Content } = await render(entry);
+    return {
+      entry,
+      Content,
+      color: colors[(h + i) % colors.length],
+      tilt: ((h % 9) - 4) * 0.6, // -2.4° ~ 2.4°
+    };
+  }),
+);
+---
+<div class="wall">
+  {notes.map(({ entry, Content, color, tilt }) => (
+    <article class="note" style={`--note-bg:${color};--tilt:${tilt}deg`}>
+      <button
+        type="button"
+        class="note-face"
+        aria-expanded="false"
+        aria-controls={`judgment-${entry.id}`}
+      >
+        {entry.data.sample && <span class="badge">示例</span>}
+        <span class="note-title">{entry.data.title}</span>
+        <span class="note-meta">
+          <time datetime={fmt(entry.data.date)}>{fmt(entry.data.date)}</time>
+          <span class="tags">
+            {entry.data.tags.map((t) => <span class="tag">#{t}</span>)}
+          </span>
+        </span>
+      </button>
+      <div class="note-detail" id={`judgment-${entry.id}`} hidden>
+        <Content />
+        <p class="hint">轻点收起</p>
+      </div>
+    </article>
+  ))}
+</div>
+
+<script>
+  // 轻点便签：原地展开 / 收起，不跳转
+  document.querySelectorAll<HTMLElement>('.note').forEach((note) => {
+    const face = note.querySelector<HTMLButtonElement>('.note-face');
+    const detail = note.querySelector<HTMLElement>('.note-detail');
+    if (!face || !detail) return;
+    note.addEventListener('click', (e) => {
+      // 详细说明里的链接正常打开，不触发收起
+      if ((e.target as HTMLElement).closest('a')) return;
+      const open = face.getAttribute('aria-expanded') === 'true';
+      face.setAttribute('aria-expanded', String(!open));
+      detail.hidden = open;
+      note.classList.toggle('is-open', !open);
+    });
+  });
+</script>
+
+<style>
+  .wall {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 14px;
+    padding: 6px 2px;
+  }
+  .note {
+    position: relative;
+    background: var(--note-bg);
+    border-radius: 3px 3px 10px 3px;
+    box-shadow:
+      0 1px 1px rgba(60, 40, 20, 0.08),
+      0 6px 14px -6px rgba(60, 40, 20, 0.28);
+    transform: rotate(var(--tilt));
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+    cursor: pointer;
+  }
+  /* 顶部"胶带" */
+  .note::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    width: 56px;
+    height: 16px;
+    transform: translateX(-50%) rotate(-3deg);
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+  .note:hover {
+    transform: rotate(0deg) translateY(-2px);
+  }
+  /* 手机两列太窄：展开时占满一行 */
+  .note.is-open {
+    grid-column: 1 / -1;
+    transform: rotate(0deg);
+    box-shadow:
+      0 1px 1px rgba(60, 40, 20, 0.08),
+      0 12px 24px -10px rgba(60, 40, 20, 0.35);
+  }
+  .note-face {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 18px 14px 12px;
+    gap: 8px;
+    color: var(--ink);
+  }
+  .note-face:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .note.is-open .note-face {
+    aspect-ratio: auto;
+    padding-bottom: 6px;
+  }
+  .badge {
+    align-self: flex-start;
+    font-size: 0.7rem;
+    line-height: 1;
+    padding: 4px 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--ink-soft);
+  }
+  .note-title {
+    flex: 1;
+    font-family: var(--font-hand);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+  .note-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 8px;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+  }
+  .tags {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .note-detail {
+    padding: 4px 16px 14px;
+    font-size: 0.95rem;
+    border-top: 1px dashed rgba(60, 40, 20, 0.2);
+    margin: 0 14px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .note-detail :global(p) {
+    margin: 10px 0 0;
+  }
+  .note-detail .hint {
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+  @media (min-width: 768px) {
+    .wall {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px 24px;
+    }
+    .note-face {
+      padding: 24px 20px 16px;
+    }
+    .note-title {
+      font-size: 1.25rem;
+    }
+    .note-meta {
+      font-size: 0.8rem;
+    }
+    /* 桌面列够宽：展开时留在原列，不占整行 */
+    .note.is-open {
+      grid-column: auto;
+      align-self: start;
+    }
+  }
+</style>
