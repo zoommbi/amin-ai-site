@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers 静态站配置：只托管 npm run build 产出的 dist/
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "amin-ai-site",
+  "compatibility_date": "2025-10-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}

@@ -14,7 +14,8 @@
 ## 技术
 
 - Astro 静态站（Node ≥ 22.22，见 `.node-version`），内容用 Markdown / YAML 存放
-- 部署：Cloudflare Pages，构建命令 `npm run build`，输出目录 `dist`
+- 部署：Cloudflare（Workers 静态资源，连接 GitHub 自动构建）。构建命令 `npm run build`，部署命令 `npx wrangler deploy`；
+  `wrangler.jsonc` 指定只发布 `dist/`。推送到 main 即自动上线
 - 手机优先，桌面也要好看；风格简洁、温暖，有个人感
 
 ## 目录结构
@@ -24,6 +25,7 @@
 ├── AGENTS.md                  # 本文件：协同规则
 ├── CLAUDE.md                  # 指向本文件
 ├── STATUS.md                  # 进度看板（每次干完活必须更新）
+├── wrangler.jsonc             # Cloudflare 部署配置（发布 dist/）
 ├── .github/ISSUE_TEMPLATE/    # 任务模板
 ├── public/                    # 静态资源（favicon 等）
 └── src/

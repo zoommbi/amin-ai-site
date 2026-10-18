@@ -10,6 +10,7 @@
 - 2026-10-18｜#3 判断便签墙：3 条示例判断（src/content/judgments/），便签色+轻微倾斜，轻点原地展开/再点收起｜下一步：#4 项目进展卡片
 - 2026-10-18｜#4 项目进展卡片：数据只来自 src/data/projects.yaml，3 个示例项目带进度条；构建时拦截链接/金额/仓库地址｜下一步：#5 协同文件
 - 2026-10-18｜#5 协同文件：AGENTS.md（含脱敏规则）、CLAUDE.md、STATUS.md、Issue 任务模板｜下一步：等待阿旻在 Cloudflare Pages 连接仓库并部署；处理「待决定」
+- 2026-10-18｜新增 wrangler.jsonc（发布 dist/），适配 Cloudflare Workers 构建流程；本地 wrangler deploy --dry-run 通过｜下一步：阿旻在 Cloudflare 点 Deploy，确认线上地址
 
 ## 进行中
 
