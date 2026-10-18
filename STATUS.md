@@ -11,10 +11,11 @@
 - 2026-10-18｜#4 项目进展卡片：数据只来自 src/data/projects.yaml，3 个示例项目带进度条；构建时拦截链接/金额/仓库地址｜下一步：#5 协同文件
 - 2026-10-18｜#5 协同文件：AGENTS.md（含脱敏规则）、CLAUDE.md、STATUS.md、Issue 任务模板｜下一步：等待阿旻在 Cloudflare Pages 连接仓库并部署；处理「待决定」
 - 2026-10-18｜新增 wrangler.jsonc（发布 dist/），适配 Cloudflare Workers 构建流程；本地 wrangler deploy --dry-run 通过｜下一步：阿旻在 Cloudflare 点 Deploy，确认线上地址
+- 2026-10-18｜Cloudflare 首次部署成功（修正 NODE_VERSION 变量后构建通过），之后推送 main 自动上线｜下一步：记录线上地址；处理「待决定」
 
 ## 进行中
 
-- 第一批 5 项任务已全部完成，等待部署与反馈
+- 第一批 5 项任务已完成并已上线，等待阿旻对「待决定」的反馈
 
 ## 卡住
 
