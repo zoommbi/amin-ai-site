@@ -12,10 +12,11 @@
 - 2026-10-18｜#5 协同文件：AGENTS.md（含脱敏规则）、CLAUDE.md、STATUS.md、Issue 任务模板｜下一步：等待阿旻在 Cloudflare Pages 连接仓库并部署；处理「待决定」
 - 2026-10-18｜新增 wrangler.jsonc（发布 dist/），适配 Cloudflare Workers 构建流程；本地 wrangler deploy --dry-run 通过｜下一步：阿旻在 Cloudflare 点 Deploy，确认线上地址
 - 2026-10-18｜Cloudflare 首次部署成功（修正 NODE_VERSION 变量后构建通过），之后推送 main 自动上线｜下一步：确定公开用的线上地址；处理「待决定」
+- 2026-10-18｜workers.dev 子域名改为中性的 aminai，线上地址 https://amin-ai-site.aminai.workers.dev，已写入 README｜下一步：处理其余「待决定」
 
 ## 进行中
 
-- 第一批 5 项任务已完成并已上线，等待阿旻对「待决定」的反馈
+- 第一批 5 项任务已完成并已上线（https://amin-ai-site.aminai.workers.dev），等待阿旻对「待决定」的反馈
 
 ## 卡住
 
@@ -26,5 +27,5 @@
 - [ ] 简介正式文案：一句话自我介绍 + 三个方向（AI 工作流 / 教育 / 小项目实践）各一句（目前是占位）
 - [ ] 3 条示例判断与 3 个示例项目的真实内容（给我内容即可替换，项目会按脱敏规则处理）
 - [ ] 第三个板块做什么（已在首页预留位置）
-- [ ] 线上地址：当前 workers.dev 子域名由账号邮箱前缀生成，像个人信息，暂不写入仓库。选项：① 在 Cloudflare 改一个中性的 workers.dev 子域名；② 绑定自定义域名；③ 维持现状
+- [x] 线上地址：已改为 https://amin-ai-site.aminai.workers.dev（2026-10-18）
 - [ ] 便签手写感字体：目前用系统楷体，部分手机没有会回落为普通字体；是否引入网络手写字体（会让首次加载变慢一些）
