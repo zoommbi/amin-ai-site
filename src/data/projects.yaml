@@ -1,0 +1,36 @@
+# 项目进展数据：网站「项目进展」板块只读取这个文件。
+# 改完这里提交即可，重新构建后网站自动更新。
+#
+# ⚠️ 脱敏规则（详见 AGENTS.md）：
+#   - 名称只用泛化名 + 字母编号，如「电商小程序」「课外兴趣班 A」
+#   - 不写真实项目名/品牌名、地名、客户与合作方、价格金额、链接、仓库名、人名
+#   - 不写具体学科、课程主题、适用年级、技术细节
+#
+# 字段：
+#   name      泛化名称
+#   summary   一句话说明（泛化）
+#   progress  进度百分比 0-100
+#   stage     当前阶段
+#   updated   最近更新日期 YYYY-MM-DD
+#   sample    （可选）true 时显示「示例」，正式数据删掉这行
+
+- name: 电商小程序
+  summary: 面向本地的线上小程序
+  progress: 60
+  stage: 内测中
+  updated: 2026-10-18
+  sample: true
+
+- name: 课外兴趣班 A
+  summary: 周末课外兴趣班
+  progress: 35
+  stage: 筹备中
+  updated: 2026-10-18
+  sample: true
+
+- name: 课外兴趣班 B
+  summary: 周末课外兴趣班
+  progress: 15
+  stage: 构思中
+  updated: 2026-10-18
+  sample: true

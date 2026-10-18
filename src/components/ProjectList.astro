@@ -1,0 +1,133 @@
+---
+import { load } from 'js-yaml';
+import { z } from 'astro/zod';
+import raw from '../data/projects.yaml?raw';
+
+// 项目数据只来自 src/data/projects.yaml
+const schema = z.array(
+  z.object({
+    name: z.string(),
+    summary: z.string(),
+    progress: z.number().min(0).max(100),
+    stage: z.string(),
+    updated: z.union([z.date(), z.string()]),
+    sample: z.boolean().default(false),
+  }),
+);
+
+const projects = schema.parse(load(raw) ?? []);
+
+// 构建时兜底拦截明显的敏感信息：链接、金额、仓库地址
+const forbidden = /https?:\/\/|www\.|[¥￥$]|\d+\s*(元|块|万)|github|gitee/i;
+for (const p of projects) {
+  for (const value of [p.name, p.summary, p.stage]) {
+    if (forbidden.test(value)) {
+      throw new Error(`projects.yaml 疑似包含敏感信息，请按 AGENTS.md 脱敏：「${value}」`);
+    }
+  }
+}
+
+const fmt = (d: Date | string) => (d instanceof Date ? d.toISOString().slice(0, 10) : d);
+---
+<ul class="projects">
+  {projects.map((p) => (
+    <li class="project">
+      <div class="top">
+        <h3>{p.name}{p.sample && <span class="sample">示例</span>}</h3>
+        <span class="stage">{p.stage}</span>
+      </div>
+      <p class="summary">{p.summary}</p>
+      <div
+        class="bar"
+        role="progressbar"
+        aria-label={`${p.name} 进度`}
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow={p.progress}
+      >
+        <span style={`width:${p.progress}%`}></span>
+      </div>
+      <div class="foot">
+        <span class="pct">{p.progress}%</span>
+        <span>更新于 <time datetime={fmt(p.updated)}>{fmt(p.updated)}</time></span>
+      </div>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .projects {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .project {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  h3 {
+    font-size: 1.05rem;
+    min-width: 0;
+  }
+  .sample {
+    margin-left: 8px;
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--ink-soft);
+    vertical-align: middle;
+  }
+  .stage {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .summary {
+    margin: 4px 0 14px;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+  .bar {
+    height: 10px;
+    border-radius: 999px;
+    background: #f0e8dc;
+    overflow: hidden;
+  }
+  .bar span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #e5a07c, var(--accent));
+  }
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  .pct {
+    font-weight: 700;
+    color: var(--ink);
+  }
+  @media (min-width: 768px) {
+    .projects {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+  }
+</style>
