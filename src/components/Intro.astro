@@ -1,15 +1,17 @@
 ---
+import Icon from './Icon.astro';
+
 // 简介区。文案为占位，阿旻后续替换。
 const focuses = [
-  { icon: '⚙️', title: 'AI 工作流', text: '把 AI 接进日常工作，让重复的事自动跑起来。（占位）' },
-  { icon: '📚', title: '教育', text: '探索 AI 时代的学习方式，做一些课外的小尝试。（占位）' },
-  { icon: '🧪', title: '小项目实践', text: '用小步快跑的方式做真实的小项目，边做边学。（占位）' },
-];
+  { icon: 'workflow', tint: '', title: 'AI 工作流', text: '把 AI 接进日常工作，让重复的事自动跑起来。（占位）' },
+  { icon: 'graduation-cap', tint: 'violet', title: '教育', text: '探索 AI 时代的学习方式，做一些课外的小尝试。（占位）' },
+  { icon: 'flask-conical', tint: 'teal', title: '小项目实践', text: '用小步快跑的方式做真实的小项目，边做边学。（占位）' },
+] as const;
 
 const entries = [
-  { href: '#judgments', title: '我的判断', desc: '一些短小的看法，写在便签上', icon: '📝' },
-  { href: '#projects', title: '项目进展', desc: '正在推进的事，进度公开', icon: '📈' },
-];
+  { href: '#judgments', title: '我的判断', desc: '一些短小的看法，写在便签上', icon: 'lightbulb', tint: 'amber' },
+  { href: '#projects', title: '项目进展', desc: '正在推进的事，进度公开', icon: 'trending-up', tint: 'teal' },
+] as const;
 ---
 <section id="about" class="intro">
   <div class="container">
@@ -22,8 +24,8 @@ const entries = [
 
     <ul class="focus">
       {focuses.map((f) => (
-        <li>
-          <span class="icon" aria-hidden="true">{f.icon}</span>
+        <li class="glass">
+          <span class:list={['icon-tile', f.tint]}><Icon name={f.icon} /></span>
           <div>
             <h3>{f.title}</h3>
             <p>{f.text}</p>
@@ -34,13 +36,13 @@ const entries = [
 
     <div class="entries">
       {entries.map((e) => (
-        <a class="entry" href={e.href}>
-          <span class="icon" aria-hidden="true">{e.icon}</span>
+        <a class="entry glass" href={e.href}>
+          <span class:list={['icon-tile', 'sm', e.tint]}><Icon name={e.icon} size={20} /></span>
           <span class="txt">
             <strong>{e.title}</strong>
             <small>{e.desc}</small>
           </span>
-          <span class="arrow" aria-hidden="true">↓</span>
+          <span class="arrow"><Icon name="arrow-down" size={18} stroke={2} /></span>
         </a>
       ))}
     </div>
@@ -84,19 +86,13 @@ const entries = [
   }
   .focus li {
     display: flex;
-    gap: 12px;
+    gap: 14px;
     align-items: flex-start;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-  }
-  .focus .icon {
-    font-size: 1.4rem;
-    line-height: 1.4;
+    padding: 16px 18px;
   }
   .focus h3 {
     font-size: 1rem;
+    margin-top: 2px;
   }
   .focus p {
     margin: 2px 0 0;
@@ -111,18 +107,22 @@ const entries = [
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 16px;
-    border-radius: var(--radius);
-    background: var(--accent-soft);
+    padding: 12px 14px;
     color: var(--ink);
     text-decoration: none;
-    transition: transform 0.15s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
   .entry:hover {
     transform: translateY(-2px);
+    box-shadow:
+      var(--glass-shadow),
+      0 16px 34px -12px rgba(110, 65, 35, 0.28);
   }
-  .entry .icon {
-    font-size: 1.4rem;
+  .entry:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
   .entry .txt {
     display: flex;
@@ -134,8 +134,14 @@ const entries = [
     color: var(--ink-soft);
   }
   .entry .arrow {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
     color: var(--accent);
-    font-weight: 700;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
   }
   @media (min-width: 768px) {
     .intro {
@@ -149,6 +155,7 @@ const entries = [
     }
     .focus li {
       flex-direction: column;
+      padding: 20px 22px;
     }
     .entries {
       grid-template-columns: 1fr 1fr;

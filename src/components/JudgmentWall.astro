@@ -83,18 +83,26 @@ const notes = await Promise.all(
   }
   .note {
     position: relative;
-    background: var(--note-bg);
-    border-radius: 3px 3px 10px 3px;
+    /* 带颜色的磨砂玻璃便签 */
+    isolation: isolate;
+    background:
+      linear-gradient(160deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 55%),
+      color-mix(in srgb, var(--note-bg) 70%, transparent);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 18px;
+    backdrop-filter: blur(18px) saturate(170%);
+    -webkit-backdrop-filter: blur(18px) saturate(170%);
     box-shadow:
-      0 1px 1px rgba(60, 40, 20, 0.08),
-      0 6px 14px -6px rgba(60, 40, 20, 0.28);
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 1px 2px rgba(60, 40, 20, 0.06),
+      0 12px 26px -12px rgba(60, 40, 20, 0.3);
     transform: rotate(var(--tilt));
     transition:
       transform 0.25s ease,
       box-shadow 0.25s ease;
     cursor: pointer;
   }
-  /* 顶部"胶带" */
+  /* 顶部"胶带"：一小条透明玻璃 */
   .note::before {
     content: '';
     position: absolute;
@@ -103,8 +111,12 @@ const notes = await Promise.all(
     width: 56px;
     height: 16px;
     transform: translateX(-50%) rotate(-3deg);
-    background: rgba(255, 255, 255, 0.55);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   }
   .note:hover {
     transform: rotate(0deg) translateY(-2px);
@@ -114,8 +126,9 @@ const notes = await Promise.all(
     grid-column: 1 / -1;
     transform: rotate(0deg);
     box-shadow:
-      0 1px 1px rgba(60, 40, 20, 0.08),
-      0 12px 24px -10px rgba(60, 40, 20, 0.35);
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 1px 2px rgba(60, 40, 20, 0.06),
+      0 18px 34px -14px rgba(60, 40, 20, 0.38);
   }
   .note-face {
     all: unset;
@@ -143,6 +156,7 @@ const notes = await Promise.all(
     padding: 4px 7px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 1px 0 #fff;
     color: var(--ink-soft);
   }
   .note-title {
