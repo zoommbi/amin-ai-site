@@ -16,21 +16,18 @@
 
 - name: 电商小程序
   summary: 面向本地的线上小程序
-  progress: 60
-  stage: 内测中
-  updated: 2026-10-18
-  sample: true
+  progress: 70
+  stage: 待上线
+  updated: 2026-10-19
+
+- name: 线上小店
+  summary: 线上零售小店
+  progress: 40
+  stage: 运营起步
+  updated: 2026-10-19
 
 - name: 课外兴趣班 A
-  summary: 周末课外兴趣班
-  progress: 35
-  stage: 筹备中
-  updated: 2026-10-18
-  sample: true
-
-- name: 课外兴趣班 B
-  summary: 周末课外兴趣班
-  progress: 15
-  stage: 构思中
-  updated: 2026-10-18
-  sample: true
+  summary: 课外兴趣班
+  progress: 25
+  stage: 课程设计中
+  updated: 2026-10-17
