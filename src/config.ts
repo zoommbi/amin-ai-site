@@ -9,4 +9,4 @@ export const THEMES = [
   { id: 'd', label: 'D 夜墨', bg: '#121316' },
 ] as const;
 
-export const SITE_THEME: (typeof THEMES)[number]['id'] = 'warm';
+export const SITE_THEME: (typeof THEMES)[number]['id'] = 'a';
