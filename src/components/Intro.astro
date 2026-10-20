@@ -1,15 +1,15 @@
 ---
 import Icon from './Icon.astro';
 
-// 简介区。文案为占位，阿旻后续替换。
+// 简介区文案。
 const focuses = [
-  { icon: 'workflow', tint: '', title: 'AI 工作流', text: '把 AI 接进日常工作，让重复的事自动跑起来。（占位）' },
-  { icon: 'graduation-cap', tint: 'violet', title: '教育', text: '探索 AI 时代的学习方式，做一些课外的小尝试。（占位）' },
-  { icon: 'flask-conical', tint: 'teal', title: '小项目实践', text: '用小步快跑的方式做真实的小项目，边做边学。（占位）' },
+  { icon: 'workflow', tint: '', title: 'AI 工作流', text: '先编排，再自动化。把流程想清楚，再交给 AI 和 Agent 去跑。' },
+  { icon: 'graduation-cap', tint: 'violet', title: '教育', text: '答案越来越便宜，提问、判断和动手实践越来越重要。' },
+  { icon: 'flask-conical', tint: 'teal', title: '小项目实践', text: '用小而真实的项目检验想法，让认知接受现实的反馈。' },
 ] as const;
 
 const entries = [
-  { href: '#judgments', title: '我的判断', desc: '一些短小的看法，写在便签上', icon: 'lightbulb', tint: 'amber' },
+  { href: '#judgments', title: '我的判断', desc: '在实践中形成、仍在修正的看法', icon: 'lightbulb', tint: 'amber' },
   { href: '#projects', title: '项目进展', desc: '正在推进的事，进度公开', icon: 'trending-up', tint: 'teal' },
 ] as const;
 ---
@@ -18,8 +18,8 @@ const entries = [
     <p class="hello">你好，我是</p>
     <h1>阿旻<span>AI</span></h1>
     <p class="lead">
-      一个用 AI 做事、也在思考 AI 的人。这里记录我的判断和正在推进的项目。
-      <em>（占位文案，之后替换）</em>
+      一个用 AI 重新组织工作的人。我关心的问题是：一个人，怎样获得过去只有组织才有的能力？
+      这里记录我的判断，和正在推进的项目。
     </p>
 
     <ul class="focus">

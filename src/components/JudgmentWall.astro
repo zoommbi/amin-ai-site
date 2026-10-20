@@ -16,7 +16,8 @@ function hash(str: string) {
   return h;
 }
 
-const fmt = (d: Date) => d.toISOString().slice(0, 10);
+// 只显示年月：很多判断只记录到形成的月份
+const fmt = (d: Date) => d.toISOString().slice(0, 7).replace('-', '.');
 
 const notes = await Promise.all(
   entries.map(async (entry, i) => {
@@ -25,7 +26,7 @@ const notes = await Promise.all(
     return {
       entry,
       Content,
-      color: `var(--note-${((h + i) % NOTE_COLORS) + 1})`,
+      color: `var(--note-${(i % NOTE_COLORS) + 1})`, // 按顺序轮换，相邻便签不撞色
       tilt: ((h % 9) - 4) * 0.6, // -2.4° ~ 2.4°
     };
   }),
@@ -43,7 +44,7 @@ const notes = await Promise.all(
         {entry.data.sample && <span class="badge">示例</span>}
         <span class="note-title">{entry.data.title}</span>
         <span class="note-meta">
-          <time datetime={fmt(entry.data.date)}>{fmt(entry.data.date)}</time>
+          <time datetime={entry.data.date.toISOString().slice(0, 7)}>{fmt(entry.data.date)}</time>
           <span class="tags">
             {entry.data.tags.map((t) => <span class="tag">#{t}</span>)}
           </span>
