@@ -31,7 +31,9 @@
 └── src/
     ├── pages/index.astro      # 首页（单页滚动）
     ├── layouts/Base.astro     # 页面骨架
-    ├── styles/global.css      # 全局样式、颜色变量
+    ├── styles/global.css      # 全局样式
+    ├── styles/themes.css      # 配色方案（颜色变量只在这里定义）
+    ├── config.ts              # 当前配色 SITE_THEME
     ├── components/
     │   ├── SiteHeader.astro   # 顶部导航
     │   ├── Intro.astro        # 简介（文案在文件顶部）

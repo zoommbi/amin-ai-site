@@ -1,0 +1,68 @@
+---
+import { THEMES } from '../config';
+---
+<!-- 配色预览：只有网址带 ?theme= 时才显示，正式访客看不到 -->
+<div class="theme-preview glass" hidden aria-label="配色预览">
+  {THEMES.map((t) => (
+    <button type="button" data-theme-id={t.id} data-bg={t.bg}>{t.label}</button>
+  ))}
+</div>
+
+<script>
+  const panel = document.querySelector<HTMLElement>('.theme-preview');
+  const params = new URLSearchParams(location.search);
+  if (panel && params.has('theme')) {
+    panel.hidden = false;
+    const buttons = panel.querySelectorAll<HTMLButtonElement>('button');
+    const mark = () =>
+      buttons.forEach((b) =>
+        b.setAttribute('aria-pressed', String(b.dataset.themeId === document.documentElement.dataset.theme)),
+      );
+    buttons.forEach((b) =>
+      b.addEventListener('click', () => {
+        const id = b.dataset.themeId!;
+        document.documentElement.dataset.theme = id;
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', b.dataset.bg!);
+        params.set('theme', id);
+        history.replaceState(null, '', `?${params}${location.hash}`);
+        mark();
+      }),
+    );
+    mark();
+  }
+</script>
+
+<style>
+  .theme-preview {
+    position: fixed;
+    left: 50%;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    gap: 4px;
+    padding: 5px;
+    border-radius: 999px;
+    max-width: calc(100vw - 24px);
+    overflow-x: auto;
+    background: var(--glass-fallback);
+  }
+  .theme-preview[hidden] {
+    display: none;
+  }
+  button {
+    all: unset;
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    padding: 6px 10px;
+    border-radius: 999px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button[aria-pressed='true'] {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+</style>

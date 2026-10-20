@@ -1,0 +1,273 @@
+/*
+ * 配色方案。每个方案定义同一组变量，组件只引用变量。
+ * 当前方案在 src/config.ts 的 SITE_THEME 里设置。
+ */
+
+/* 现状：暖色毛玻璃 */
+:root,
+[data-theme='warm'] {
+  color-scheme: light;
+  --bg: #f7efe4;
+  --blob-1: rgba(255, 186, 140, 0.55);
+  --blob-2: rgba(255, 214, 165, 0.6);
+  --blob-3: rgba(214, 196, 255, 0.4);
+  --blob-4: rgba(178, 226, 206, 0.45);
+  --ink: #3b302a;
+  --ink-soft: #6f6259;
+  --accent: #c9744e;
+  --accent-soft: #f3e2d6;
+  --line-soft: rgba(60, 40, 20, 0.2);
+
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.34));
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-blur: blur(22px) saturate(180%);
+  --glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.25),
+    0 1px 2px rgba(90, 55, 30, 0.06),
+    0 10px 30px -8px rgba(110, 65, 35, 0.18);
+  --glass-fallback: rgba(255, 252, 247, 0.92);
+  --sheen: rgba(255, 255, 255, 0.45);
+  --shadow-tint: rgba(110, 65, 35, 0.28);
+  --chip-bg: rgba(255, 255, 255, 0.7);
+  --chip-shadow: inset 0 1px 0 #fff, 0 2px 8px -4px rgba(110, 65, 35, 0.3);
+
+  --tile-ink: #fff;
+  --tile-shadow-on: 1;
+  --tile-0: #e0895f;
+  --tile-0b: #c9744e;
+  --tile-1: #f5b65b;
+  --tile-1b: #e08a2e;
+  --tile-2: #a99af0;
+  --tile-2b: #7a64d6;
+  --tile-3: #6cc6ad;
+  --tile-3b: #2f9a83;
+
+  --note-1: #fff1a8;
+  --note-2: #ffd9cf;
+  --note-3: #d6f0d8;
+  --note-4: #d7e8fb;
+  --note-5: #ecdffb;
+  --note-mix: 70%;
+  --note-border: rgba(255, 255, 255, 0.75);
+  --note-blur: blur(18px) saturate(170%);
+  --note-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 2px rgba(60, 40, 20, 0.06),
+    0 12px 26px -12px rgba(60, 40, 20, 0.3);
+  --tape-bg: rgba(255, 255, 255, 0.5);
+  --tape-border: rgba(255, 255, 255, 0.8);
+
+  --bar-track: rgba(120, 80, 50, 0.08);
+  --bar-fill: linear-gradient(90deg, #f0b089, #c9744e);
+}
+
+/* A 留白：近白底、纯色卡片、细边框，一种深青蓝点缀。最克制 */
+[data-theme='a'] {
+  color-scheme: light;
+  --bg: #f6f6f4;
+  --blob-1: transparent;
+  --blob-2: transparent;
+  --blob-3: transparent;
+  --blob-4: transparent;
+  --ink: #1d1d1f;
+  --ink-soft: #6e6e73;
+  --accent: #2c6e8f;
+  --accent-soft: #e4eef3;
+  --line-soft: rgba(0, 0, 0, 0.1);
+
+  --glass-bg: #ffffff;
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-blur: none;
+  --glass-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -14px rgba(0, 0, 0, 0.14);
+  --glass-fallback: #ffffff;
+  --sheen: transparent;
+  --shadow-tint: rgba(0, 0, 0, 0.14);
+  --chip-bg: #f1f1ef;
+  --chip-shadow: none;
+
+  --tile-ink: #2c6e8f;
+  --tile-shadow-on: 0;
+  --tile-0: #e9f1f5;
+  --tile-0b: #e1ebf0;
+  --tile-1: #e9f1f5;
+  --tile-1b: #e1ebf0;
+  --tile-2: #e9f1f5;
+  --tile-2b: #e1ebf0;
+  --tile-3: #e9f1f5;
+  --tile-3b: #e1ebf0;
+
+  --note-1: #f6efd2;
+  --note-2: #f3e1da;
+  --note-3: #e1ebdf;
+  --note-4: #dfe8f0;
+  --note-5: #e8e3ef;
+  --note-mix: 100%;
+  --note-border: rgba(0, 0, 0, 0.04);
+  --note-blur: none;
+  --note-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 10px 20px -14px rgba(0, 0, 0, 0.2);
+  --tape-bg: rgba(255, 255, 255, 0.7);
+  --tape-border: rgba(0, 0, 0, 0.04);
+
+  --bar-track: #ececea;
+  --bar-fill: #2c6e8f;
+}
+
+/* B 雾玻璃：冷灰蓝底 + 很淡的光晕，保留毛玻璃，但更安静 */
+[data-theme='b'] {
+  color-scheme: light;
+  --bg: #eef1f6;
+  --blob-1: rgba(170, 195, 255, 0.4);
+  --blob-2: rgba(205, 192, 255, 0.3);
+  --blob-3: rgba(180, 225, 235, 0.32);
+  --blob-4: rgba(255, 220, 232, 0.25);
+  --ink: #1c2333;
+  --ink-soft: #5d6678;
+  --accent: #4c63c9;
+  --accent-soft: #e3e8fb;
+  --line-soft: rgba(30, 45, 90, 0.16);
+
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.42));
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-blur: blur(22px) saturate(160%);
+  --glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 1px 2px rgba(30, 45, 90, 0.05),
+    0 10px 30px -10px rgba(30, 45, 90, 0.18);
+  --glass-fallback: rgba(250, 251, 255, 0.94);
+  --sheen: rgba(255, 255, 255, 0.4);
+  --shadow-tint: rgba(30, 45, 90, 0.22);
+  --chip-bg: rgba(255, 255, 255, 0.75);
+  --chip-shadow: inset 0 1px 0 #fff, 0 2px 8px -4px rgba(30, 45, 90, 0.25);
+
+  --tile-ink: #fff;
+  --tile-shadow-on: 1;
+  --tile-0: #8a9cf0;
+  --tile-0b: #4c63c9;
+  --tile-1: #f2c27e;
+  --tile-1b: #d6974a;
+  --tile-2: #b4a3ef;
+  --tile-2b: #7f6ad3;
+  --tile-3: #7cc5d0;
+  --tile-3b: #3a93a3;
+
+  --note-1: #fdf3c4;
+  --note-2: #fde0e6;
+  --note-3: #dcf1ea;
+  --note-4: #dbe6fd;
+  --note-5: #e9e1fb;
+  --note-mix: 68%;
+  --note-border: rgba(255, 255, 255, 0.8);
+  --note-blur: blur(18px) saturate(160%);
+  --note-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 2px rgba(30, 45, 90, 0.05),
+    0 12px 26px -12px rgba(30, 45, 90, 0.25);
+  --tape-bg: rgba(255, 255, 255, 0.55);
+  --tape-border: rgba(255, 255, 255, 0.85);
+
+  --bar-track: rgba(30, 45, 90, 0.08);
+  --bar-fill: linear-gradient(90deg, #95a6f2, #4c63c9);
+}
+
+/* C 鼠尾草：米色纸张底、实色卡片、灰绿点缀，温暖但不艳 */
+[data-theme='c'] {
+  color-scheme: light;
+  --bg: #f3f1ea;
+  --blob-1: transparent;
+  --blob-2: transparent;
+  --blob-3: transparent;
+  --blob-4: transparent;
+  --ink: #2e3530;
+  --ink-soft: #69716a;
+  --accent: #557a62;
+  --accent-soft: #e2eadf;
+  --line-soft: rgba(50, 60, 45, 0.18);
+
+  --glass-bg: #fbfaf5;
+  --glass-border: #e6e2d6;
+  --glass-blur: none;
+  --glass-shadow: 0 1px 2px rgba(50, 45, 30, 0.05), 0 10px 24px -16px rgba(50, 45, 30, 0.2);
+  --glass-fallback: #fbfaf5;
+  --sheen: transparent;
+  --shadow-tint: rgba(50, 45, 30, 0.2);
+  --chip-bg: #efece2;
+  --chip-shadow: none;
+
+  --tile-ink: #fff;
+  --tile-shadow-on: 0;
+  --tile-0: #7f9f88;
+  --tile-0b: #557a62;
+  --tile-1: #d9b97c;
+  --tile-1b: #b8924d;
+  --tile-2: #a8a1c4;
+  --tile-2b: #7d76a3;
+  --tile-3: #88aeb0;
+  --tile-3b: #5a8789;
+
+  --note-1: #f1e8c6;
+  --note-2: #ecdacd;
+  --note-3: #d9e4d2;
+  --note-4: #d6e1e2;
+  --note-5: #e4ded1;
+  --note-mix: 100%;
+  --note-border: rgba(50, 45, 30, 0.05);
+  --note-blur: none;
+  --note-shadow: 0 1px 2px rgba(50, 45, 30, 0.06), 0 10px 20px -14px rgba(50, 45, 30, 0.28);
+  --tape-bg: rgba(255, 255, 255, 0.6);
+  --tape-border: rgba(50, 45, 30, 0.06);
+
+  --bar-track: #e7e3d8;
+  --bar-fill: #557a62;
+}
+
+/* D 夜墨：深色底、低调玻璃、暖金点缀 */
+[data-theme='d'] {
+  color-scheme: dark;
+  --bg: #121316;
+  --blob-1: rgba(90, 110, 200, 0.16);
+  --blob-2: rgba(210, 160, 90, 0.1);
+  --blob-3: transparent;
+  --blob-4: rgba(80, 160, 140, 0.1);
+  --ink: #ececf0;
+  --ink-soft: #9a9ca6;
+  --accent: #e3b46c;
+  --accent-soft: rgba(227, 180, 108, 0.14);
+  --line-soft: rgba(255, 255, 255, 0.14);
+
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035));
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: blur(22px) saturate(140%);
+  --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 30px -12px rgba(0, 0, 0, 0.6);
+  --glass-fallback: #1d1e22;
+  --sheen: rgba(255, 255, 255, 0.06);
+  --shadow-tint: rgba(0, 0, 0, 0.6);
+  --chip-bg: rgba(255, 255, 255, 0.08);
+  --chip-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  --tile-ink: #fff;
+  --tile-shadow-on: 0;
+  --tile-0: #d9a35e;
+  --tile-0b: #b07a35;
+  --tile-1: #d6b25c;
+  --tile-1b: #a8832d;
+  --tile-2: #8f84d6;
+  --tile-2b: #6656b5;
+  --tile-3: #5fae9a;
+  --tile-3b: #2f7f6c;
+
+  --note-1: #3a3423;
+  --note-2: #3c2b2a;
+  --note-3: #24342b;
+  --note-4: #232f3e;
+  --note-5: #2f2a3d;
+  --note-mix: 100%;
+  --note-border: rgba(255, 255, 255, 0.06);
+  --note-blur: none;
+  --note-shadow: 0 12px 26px -12px rgba(0, 0, 0, 0.7);
+  --tape-bg: rgba(255, 255, 255, 0.14);
+  --tape-border: rgba(255, 255, 255, 0.12);
+
+  --bar-track: rgba(255, 255, 255, 0.08);
+  --bar-fill: linear-gradient(90deg, #b8894a, #e3b46c);
+}

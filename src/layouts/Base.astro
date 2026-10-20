@@ -1,5 +1,8 @@
 ---
+import '../styles/themes.css';
 import '../styles/global.css';
+import { SITE_THEME, THEMES } from '../config';
+import ThemePreview from '../components/ThemePreview.astro';
 
 interface Props {
   title?: string;
@@ -10,18 +13,27 @@ const {
   title = '阿旻AI',
   description = '阿旻AI 的个人网站：AI 工作流、教育与小项目实践。',
 } = Astro.props;
+
+const themeBg = THEMES.find((t) => t.id === SITE_THEME)?.bg;
+const themeIds = THEMES.map((t) => t.id);
 ---
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme={SITE_THEME}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f7efe4" />
+    <meta name="theme-color" content={themeBg} />
+    <script is:inline define:vars={{ themeIds }}>
+      // 预览配色：网址带 ?theme=a 时，在页面绘制前切换，避免闪烁
+      const t = new URLSearchParams(location.search).get('theme');
+      if (t && themeIds.includes(t)) document.documentElement.dataset.theme = t;
+    </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
   </head>
   <body>
     <slot />
+    <ThemePreview />
   </body>
 </html>
