@@ -17,6 +17,7 @@
 - 部署：Cloudflare（Workers 静态资源，连接 GitHub 自动构建）。构建命令 `npm run build`，部署命令 `npx wrangler deploy`；
   `wrangler.jsonc` 指定只发布 `dist/`。推送到 main 即自动上线
 - 手机优先，桌面也要好看；风格简洁、温暖，有个人感
+- 第三方网络资源（字体、脚本、图床）不默认引入，需阿旻在 `STATUS.md` 的「待决定」中确认
 
 ## 目录结构
 
@@ -83,6 +84,8 @@ tags: [标签1, 标签2]
   聊天记录、可识别的个人经历等）。
 
 ## 工作流程
+
+开始任何改动前，先读 `STATUS.md` 的「进行中」「卡住」「待决定」，避免重复劳动，也避免替阿旻做决定。
 
 1. **任务来源**：GitHub Issue（用 `.github/ISSUE_TEMPLATE/task.md` 模板，必须写验收标准）。
 2. **每完成一项就 commit 并 push**，提交信息写清做了什么，并关联 Issue（如 `Closes #3`）。
