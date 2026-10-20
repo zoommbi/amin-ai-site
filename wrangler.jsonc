@@ -5,5 +5,7 @@
   "compatibility_date": "2025-10-01",
   "assets": {
     "directory": "./dist"
-  }
+  },
+  // 非 main 分支的预览部署（npx wrangler preview）需要这个块，留空即可
+  "previews": {}
 }
