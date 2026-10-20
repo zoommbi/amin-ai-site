@@ -1,9 +1,36 @@
+/*
+ * 「阿旻AI」字标字体：霞鹜文楷 Bold（LXGW WenKai，SIL OFL 1.1，见 public/fonts/LXGW-WenKai-OFL.txt）
+ * 只截取了「阿、旻、A、I」四个字形，合计约 3KB。改字标文字时需要重新截取。
+ */
+@font-face {
+  font-family: 'Amin Wordmark';
+  src: url('/fonts/wordmark-kai-a.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+  unicode-range: U+963F;
+}
+@font-face {
+  font-family: 'Amin Wordmark';
+  src: url('/fonts/wordmark-kai-min.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+  unicode-range: U+65FB;
+}
+@font-face {
+  font-family: 'Amin Wordmark';
+  src: url('/fonts/wordmark-kai-latin.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+  unicode-range: U+41, U+49;
+}
+
 :root {
   --radius: 20px;
   --maxw: 960px;
   --gutter: 16px;
   --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
+  --font-wordmark: "Amin Wordmark", var(--font-hand);
   --font-hand: "LXGW WenKai", "Kaiti SC", "STKaiti", "KaiTi", "Noto Serif SC", serif;
 }
 
