@@ -13,9 +13,11 @@
 - 2026-10-18｜新增 wrangler.jsonc（发布 dist/），适配 Cloudflare Workers 构建流程；本地 wrangler deploy --dry-run 通过｜下一步：阿旻在 Cloudflare 点 Deploy，确认线上地址
 - 2026-10-18｜Cloudflare 首次部署成功（修正 NODE_VERSION 变量后构建通过），之后推送 main 自动上线｜下一步：确定公开用的线上地址；处理「待决定」
 - 2026-10-18｜workers.dev 子域名改为中性的 aminai，线上地址 https://amin-ai-site.aminai.workers.dev，已写入 README｜下一步：处理其余「待决定」
+- 2026-10-19｜视觉改版（草稿 PR）：emoji 图标换成统一的线性 SVG 图标（Lucide，彩色圆角底座），整体改为暖色毛玻璃风格（悬浮玻璃导航、玻璃卡片、彩色玻璃便签、玻璃进度条）；内容未改｜下一步：阿旻看前后对比图后决定是否合并
 
 ## 进行中
 
+- 视觉改版（毛玻璃 + 图标重绘）在草稿 PR 中，等阿旻确认后合并上线
 - 第一批 5 项任务已完成并已上线（https://amin-ai-site.aminai.workers.dev），等待阿旻对「待决定」的反馈
 
 ## 卡住

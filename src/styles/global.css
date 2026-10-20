@@ -1,12 +1,22 @@
 :root {
-  --bg: #faf6ef;
+  --bg: #f7efe4;
   --surface: #fffdf8;
   --ink: #3b302a;
   --ink-soft: #6f6259;
   --line: #e8dfd2;
   --accent: #c9744e;
   --accent-soft: #f3e2d6;
-  --radius: 14px;
+  --radius: 20px;
+
+  /* 毛玻璃（Liquid Glass）材质 */
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.34));
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-blur: blur(22px) saturate(180%);
+  --glass-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.25),
+    0 1px 2px rgba(90, 55, 30, 0.06),
+    0 10px 30px -8px rgba(110, 65, 35, 0.18);
   --maxw: 960px;
   --gutter: 16px;
   --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
@@ -27,12 +37,98 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.75;
   overflow-x: hidden;
+}
+
+/* 背景：几团柔和的暖色光斑，给玻璃提供可折射的底色 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -10vmax;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40vmax 34vmax at 12% 8%, rgba(255, 186, 140, 0.55), transparent 70%),
+    radial-gradient(36vmax 30vmax at 92% 18%, rgba(255, 214, 165, 0.6), transparent 70%),
+    radial-gradient(42vmax 36vmax at 78% 78%, rgba(214, 196, 255, 0.4), transparent 70%),
+    radial-gradient(38vmax 32vmax at 8% 82%, rgba(178, 226, 206, 0.45), transparent 70%);
+  filter: blur(20px);
+}
+
+/* 通用玻璃面板 */
+.glass {
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+/* 顶部高光：模拟玻璃边缘的反光 */
+.glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 42%);
+  mix-blend-mode: soft-light;
+}
+
+/* 图标底座：iOS 风格的圆角方块，带色调玻璃与内高光 */
+.icon-tile {
+  --tile: #e0895f;
+  --tile-2: #c9744e;
+  flex-shrink: 0;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  color: #fff;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0) 55%),
+    linear-gradient(145deg, var(--tile), var(--tile-2));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.08),
+    0 6px 14px -6px var(--tile-2);
+}
+.icon-tile.sm {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+}
+.icon-tile.amber {
+  --tile: #f5b65b;
+  --tile-2: #e08a2e;
+}
+.icon-tile.rose {
+  --tile: #f29a86;
+  --tile-2: #d8664f;
+}
+.icon-tile.teal {
+  --tile: #6cc6ad;
+  --tile-2: #2f9a83;
+}
+.icon-tile.violet {
+  --tile: #a99af0;
+  --tile-2: #7a64d6;
+}
+
+/* 不支持毛玻璃的浏览器：退回更不透明的底色，保证可读 */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgba(255, 252, 247, 0.92);
+  }
 }
 
 img {
@@ -71,7 +167,7 @@ h3 {
   font-size: 1.5rem;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .section-head p {

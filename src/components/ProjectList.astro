@@ -31,7 +31,7 @@ const fmt = (d: Date | string) => (d instanceof Date ? d.toISOString().slice(0, 
 ---
 <ul class="projects">
   {projects.map((p) => (
-    <li class="project">
+    <li class="project glass">
       <div class="top">
         <h3>{p.name}{p.sample && <span class="sample">示例</span>}</h3>
         <span class="stage">{p.stage}</span>
@@ -64,10 +64,7 @@ const fmt = (d: Date | string) => (d instanceof Date ? d.toISOString().slice(0, 
     gap: 14px;
   }
   .project {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 16px 18px;
+    padding: 18px 20px;
   }
   .top {
     display: flex;
@@ -91,7 +88,8 @@ const fmt = (d: Date | string) => (d instanceof Date ? d.toISOString().slice(0, 
     font-size: 0.75rem;
     padding: 3px 10px;
     border-radius: 999px;
-    background: var(--accent-soft);
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(201, 116, 78, 0.18);
     color: var(--accent);
     font-weight: 600;
   }
@@ -100,17 +98,23 @@ const fmt = (d: Date | string) => (d instanceof Date ? d.toISOString().slice(0, 
     color: var(--ink-soft);
     font-size: 0.92rem;
   }
+  /* 进度条：内凹的玻璃槽 + 带高光的填充 */
   .bar {
     height: 10px;
     border-radius: 999px;
-    background: #f0e8dc;
+    background: rgba(120, 80, 50, 0.08);
+    box-shadow:
+      inset 0 1px 2px rgba(90, 55, 30, 0.12),
+      0 1px 0 rgba(255, 255, 255, 0.8);
     overflow: hidden;
   }
   .bar span {
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: linear-gradient(90deg, #e5a07c, var(--accent));
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 60%),
+      linear-gradient(90deg, #f0b089, var(--accent));
   }
   .foot {
     display: flex;
