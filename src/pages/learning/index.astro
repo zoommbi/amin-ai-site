@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import LearningList from '../../components/LearningList.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Icon from '../../components/Icon.astro';
+---
+<Base title="正在学习 · 阿旻AI" description="阿旻AI 正在学习和梳理的主题，用知识地图呈现。">
+  <div id="top"></div>
+  <SiteHeader />
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>
+            <span class="icon-tile violet"><Icon name="map" /></span>
+            正在学习
+          </h2>
+          <p>和 AI 一起梳理过的主题，整理成一张张知识地图。先看全貌，再点开细节。</p>
+        </div>
+        <LearningList />
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>

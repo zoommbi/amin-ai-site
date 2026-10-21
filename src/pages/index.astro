@@ -4,6 +4,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import Intro from '../components/Intro.astro';
 import JudgmentWall from '../components/JudgmentWall.astro';
 import ProjectList from '../components/ProjectList.astro';
+import LearningList from '../components/LearningList.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Icon from '../components/Icon.astro';
 ---
@@ -39,7 +40,18 @@ import Icon from '../components/Icon.astro';
       </div>
     </section>
 
-    <!-- 第三个板块预留位置（待定） -->
+    <section id="learning" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>
+            <span class="icon-tile violet"><Icon name="map" /></span>
+            正在学习
+          </h2>
+          <p>和 AI 一起梳理过的主题，整理成知识地图。点开地图，轻点知识块看细节。</p>
+        </div>
+        <LearningList />
+      </div>
+    </section>
   </main>
   <SiteFooter />
 </Base>

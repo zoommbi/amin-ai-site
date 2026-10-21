@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import KnowledgeMap from '../../components/KnowledgeMap.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+
+export async function getStaticPaths() {
+  const maps = await getCollection('maps', ({ data }) => !data.draft);
+  return maps.map((map) => ({ params: { id: map.id }, props: { map } }));
+}
+
+const { map } = Astro.props;
+const fmt = (d: Date) => d.toISOString().slice(0, 10).replaceAll('-', '.');
+---
+<Base title={`${map.data.title} · 阿旻AI`} description={map.data.summary}>
+  <div id="top"></div>
+  <SiteHeader />
+  <main>
+    <section class="section map-page">
+      <div class="container">
+        <a class="back" href="/learning/">← 正在学习</a>
+        <div class="section-head">
+          <p class="meta">
+            <span class="status">{map.data.status}</span>
+            更新于 {fmt(map.data.updated)}
+            {map.data.tags.map((t) => <span>#{t}</span>)}
+          </p>
+          <h1>{map.data.title}</h1>
+          <p>{map.data.summary}</p>
+        </div>
+        {map.data.note && <p class="source-note">{map.data.note}</p>}
+        {map.data.sample && (
+          <p class="sample-note glass">这是一张示例地图：结构可用，内容是占位，正式内容整理后替换。</p>
+        )}
+        <KnowledgeMap map={map} />
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>
+
+<style>
+  .map-page {
+    padding-top: 28px;
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  h1 {
+    font-size: 1.7rem;
+    margin-top: 6px;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+    font-size: 0.8rem !important;
+  }
+  .status {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .source-note {
+    margin: -8px 0 18px;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  .sample-note {
+    margin: 0 0 18px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  @media (min-width: 768px) {
+    .map-page {
+      padding-top: 40px;
+    }
+    h1 {
+      font-size: 2.2rem;
+    }
+  }
+</style>

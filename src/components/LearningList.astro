@@ -1,0 +1,132 @@
+---
+import { getCollection } from 'astro:content';
+
+// 「正在学习」卡片列表：每张知识地图一张卡片，最近更新的在前；draft: true 的不显示
+const maps = (await getCollection('maps', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.updated.getTime() - a.data.updated.getTime(),
+);
+
+const fmt = (d: Date) => d.toISOString().slice(0, 10).replaceAll('-', '.');
+const TINTS = ['', 'amber', 'violet', 'teal'] as const;
+---
+<div class="maps">
+  {maps.map((m) => {
+    const count = m.data.regions.reduce((n, r) => n + r.nodes.length, 0);
+    return (
+      <a class="map-card glass" href={`/learning/${m.id}/`}>
+        <span class="top">
+          <span class="status">{m.data.status}</span>
+          {m.data.sample && <span class="status sample">示例</span>}
+          <time datetime={m.data.updated.toISOString().slice(0, 10)}>更新于 {fmt(m.data.updated)}</time>
+        </span>
+        <strong>{m.data.title}</strong>
+        <span class="summary">{m.data.summary}</span>
+        {/* 缩略图：每个板块一行色块，块数 = 知识块数 */}
+        <span class="mini" aria-hidden="true">
+          {m.data.regions.map((r, ri) => (
+            <span class:list={['mini-row', TINTS[ri % 4]]}>
+              {r.nodes.map(() => <i />)}
+            </span>
+          ))}
+        </span>
+        <span class="meta">{m.data.regions.length} 个板块 · {count} 个知识块 · 打开地图 →</span>
+      </a>
+    );
+  })}
+</div>
+
+<style>
+  .maps {
+    display: grid;
+    gap: 14px;
+  }
+  .map-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px;
+    color: var(--ink);
+    text-decoration: none;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .map-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      var(--glass-shadow),
+      0 16px 34px -12px var(--shadow-tint);
+  }
+  .map-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+  }
+  .top time {
+    margin-left: auto;
+  }
+  .status {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .status.sample {
+    background: var(--chip-bg);
+    box-shadow: var(--chip-shadow);
+    color: var(--ink-soft);
+  }
+  strong {
+    font-size: 1.15rem;
+  }
+  .summary {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  .mini {
+    display: grid;
+    gap: 5px;
+    margin: 8px 0 4px;
+  }
+  .mini-row {
+    --c: var(--tile-0);
+    display: flex;
+    gap: 5px;
+  }
+  .mini-row.amber {
+    --c: var(--tile-1);
+  }
+  .mini-row.violet {
+    --c: var(--tile-2);
+  }
+  .mini-row.teal {
+    --c: var(--tile-3);
+  }
+  .mini i {
+    flex: 1;
+    max-width: 64px;
+    height: 10px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--c) 55%, transparent);
+  }
+  .mini i:first-child {
+    background: var(--c);
+  }
+  .meta {
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
+  @media (min-width: 768px) {
+    .maps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+  }
+</style>
