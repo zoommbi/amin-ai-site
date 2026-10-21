@@ -90,6 +90,7 @@ const paragraphs = (s: string) =>
               </ul>
             </>
           )}
+          {n.source && <p class="source">出处：{n.source}</p>}
         </article>
       ))}
     </div>
@@ -349,6 +350,13 @@ const paragraphs = (s: string) =>
     border-radius: 12px;
     border: 1px dashed var(--line-soft);
     font-size: 0.92rem;
+  }
+  .card .source {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--line-soft);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
   }
   .questions span {
     flex: 1;

@@ -24,6 +24,7 @@ const mapNode = z.object({
   points: z.array(z.string()).default([]), // 要点
   related: z.array(z.string()).default([]), // 相关知识块的 id
   questions: z.array(z.string()).default([]), // 想深入时可以继续问 AI 的问题
+  source: z.string().optional(), // 出处，显示在弹窗底部
 });
 
 const maps = defineCollection({
@@ -34,6 +35,7 @@ const maps = defineCollection({
     status: z.enum(['学习中', '已梳理']).default('学习中'),
     updated: z.coerce.date(),
     tags: z.array(z.string()).default([]),
+    note: z.string().optional(), // 地图来源说明，显示在标题下方
     sample: z.boolean().default(false), // true 时显示"示例"，内容是占位
     draft: z.boolean().default(false),
     regions: z.array(

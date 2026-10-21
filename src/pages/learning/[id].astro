@@ -29,6 +29,7 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10).replaceAll('-', '.');
           <h1>{map.data.title}</h1>
           <p>{map.data.summary}</p>
         </div>
+        {map.data.note && <p class="source-note">{map.data.note}</p>}
         {map.data.sample && (
           <p class="sample-note glass">这是一张示例地图：结构可用，内容是占位，正式内容整理后替换。</p>
         )}
@@ -65,6 +66,11 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10).replaceAll('-', '.');
     border-radius: 999px;
     background: var(--accent-soft);
     color: var(--accent);
+  }
+  .source-note {
+    margin: -8px 0 18px;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
   }
   .sample-note {
     margin: 0 0 18px;
