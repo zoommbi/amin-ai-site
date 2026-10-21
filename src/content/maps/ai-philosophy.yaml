@@ -1,0 +1,125 @@
+# 示例地图：结构是真的，内容是占位。阿旻贴来自己的「AI 哲学」梳理后替换，并去掉 sample: true
+title: AI 哲学地图
+summary: 把关于 AI 的哲学问题分成几块：它是什么、它懂不懂、它该怎样、它和人是什么关系。
+status: 学习中
+updated: 2026-10-21
+tags: [AI, 哲学]
+sample: true
+
+regions:
+  - id: mind
+    title: 心智：AI 是什么
+    summary: 机器能不能有心智，"会思考"到底指什么。
+    nodes:
+      - id: turing-test
+        title: 图灵测试
+        summary: 不问机器"是否思考"，只看它的表现能否和人区分开。
+        detail: |
+          把"机器能思考吗"这个难以定义的问题，换成一个可以操作的测试：如果在对话中分辨不出对面是人还是机器，就可以说它表现出了智能。
+
+          它的价值在于把讨论从定义拉回到表现；争议在于"表现得像"是否等于"真的是"。
+        points:
+          - 用行为标准替代内在标准
+          - 今天的大模型让这个测试变得不再稀奇
+        related: [chinese-room, understanding]
+        questions:
+          - 大模型通过图灵测试，说明了什么，又没说明什么？
+      - id: chinese-room
+        title: 中文房间
+        summary: 按规则摆弄符号，不等于理解符号的意思。
+        detail: |
+          一个不懂中文的人在房间里按手册处理中文字条，外面的人以为他懂中文。这个思想实验想说明：语法操作本身不产生语义理解。
+
+          反驳很多，比如"整个系统懂了"。它至今仍是讨论大模型是否"理解"的起点。
+        points:
+          - 区分语法（形式）和语义（意义）
+          - 对"行为即智能"的直接挑战
+        related: [turing-test, understanding]
+        questions:
+          - 大模型和中文房间里的人，关键区别在哪里？
+      - id: consciousness
+        title: 意识难题
+        summary: 能解释所有功能，也不一定能解释"有感受"这件事。
+        detail: |
+          即使把信息处理的每一步都讲清楚，"为什么会有主观体验"仍然是另一个问题。放到 AI 上：一个系统可以表现出情绪和自我描述，但我们没有办法从外部确认它是否真的有感受。
+        points:
+          - 功能问题和体验问题是两回事
+          - 目前没有公认的检测意识的方法
+        related: [moral-status]
+
+  - id: knowledge
+    title: 认知：AI 懂不懂
+    summary: 预测下一个词，和理解世界之间隔着什么。
+    nodes:
+      - id: understanding
+        title: 理解是什么
+        summary: 能用、能迁移、能解释，才算理解？
+        detail: |
+          与其争论"懂不懂"，不如拆成可检验的能力：能否在新情境下正确使用、能否迁移到别的问题、能否解释原因。按这个拆法，AI 在一些维度上很强，在另一些维度上很脆弱。
+        points:
+          - 把"理解"拆成可检验的能力
+          - 不同维度上的表现差别很大
+        related: [chinese-room, hallucination]
+        questions:
+          - 怎样设计一个问题，检验 AI 是真理解还是在套模式？
+      - id: hallucination
+        title: 幻觉与真
+        summary: 流畅不等于真实，AI 没有"我不确定"的天然感觉。
+        detail: |
+          模型生成的是"看起来合理"的内容，而不是"经过核实"的内容。这让"真"的责任落回到使用者身上：引用、数字、事实需要核对。
+        points:
+          - 流畅性和真实性是两个指标
+          - 核实的责任在人
+        related: [understanding, responsibility]
+
+  - id: ethics
+    title: 伦理：AI 该怎样
+    summary: 价值放进机器，谁来定、怎么定、出了事谁负责。
+    nodes:
+      - id: alignment
+        title: 对齐
+        summary: 让 AI 的目标和人真正想要的一致。
+        detail: |
+          难点不只是技术：人想要什么本身就不清楚、会变、彼此冲突。对齐既是工程问题，也是"谁的价值"的问题。
+        points:
+          - 指令和意图之间总有缝隙
+          - 价值本身存在分歧
+        related: [responsibility, moral-status]
+        questions:
+          - 如果不同的人想要的东西冲突，AI 应该听谁的？
+      - id: responsibility
+        title: 责任归属
+        summary: AI 可以做决定，但担责的仍然是人。
+        detail: |
+          当结果来自"人 + AI"的协作，责任不会消失，只会更需要说清楚：谁设定目标、谁审核结果、谁签字交付。
+        points:
+          - 能力可以外包，责任不能
+        related: [alignment, collaboration]
+      - id: moral-status
+        title: 道德地位
+        summary: 如果 AI 有一天可能有感受，我们欠它什么？
+        detail: |
+          这是一个"宁可先想"的问题：在无法确认的情况下，怎样对待一个可能有体验的系统才算审慎。
+        related: [consciousness, alignment]
+
+  - id: human
+    title: 人与 AI：我们怎么相处
+    summary: AI 越强，人越需要想清楚自己的位置。
+    nodes:
+      - id: collaboration
+        title: 协作而非替代
+        summary: 把 AI 当作能力节点，人负责编排和判断。
+        detail: |
+          与其问"会不会被替代"，不如问"哪些环节交给 AI，哪些环节必须由人把关"。人的价值转向提出问题、做判断、承担结果。
+        points:
+          - 人做编排，AI 做执行
+          - 判断力是人最该保留的能力
+        related: [responsibility, meaning]
+        questions:
+          - 在我的日常工作里，哪些环节最适合先交给 AI？
+      - id: meaning
+        title: 意义从哪来
+        summary: 当产出变得便宜，做事的意义要从别处找。
+        detail: |
+          如果很多产出都能被快速生成，意义就更多来自选择做什么、和谁一起做、为谁负责。这是一个技术之外、需要每个人自己回答的问题。
+        related: [collaboration]

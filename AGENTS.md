@@ -39,9 +39,13 @@
     │   ├── Intro.astro        # 简介（文案在文件顶部）
     │   ├── JudgmentWall.astro # 「我的判断」便签墙
     │   ├── ProjectList.astro  # 「项目进展」卡片
+    │   ├── LearningList.astro # 「正在学习」地图卡片
+    │   ├── KnowledgeMap.astro # 知识地图（板块 + 知识块 + 详情弹窗）
     │   └── SiteFooter.astro
     ├── content.config.ts      # 内容集合定义
     ├── content/judgments/     # 每条判断一个 .md 文件
+    ├── content/maps/          # 每张知识地图一个 .yaml 文件
+    ├── pages/learning/        # 学习索引页 + 每张地图一页（/learning/文件名/）
     └── data/projects.yaml     # 项目进展的唯一数据源
 ```
 
@@ -60,6 +64,34 @@ tags: [标签1, 标签2]
 
 详细说明（轻点卡片后展开显示）。
 ```
+
+### 新增一张知识地图（正在学习）
+
+在 `src/content/maps/` 新建 `英文短名.yaml`（文件名即网址 `/learning/英文短名/`），
+字段定义见 `src/content.config.ts`，可照 `ai-philosophy.yaml` 抄：
+
+```yaml
+title: 地图标题
+summary: 一句话说明
+status: 学习中        # 或 已梳理
+updated: 2026-10-21
+tags: [标签]
+regions:              # 板块
+  - id: part-a
+    title: 板块名
+    summary: 一句话
+    nodes:            # 知识块：卡片上显示 title + summary，轻点弹出其余字段
+      - id: node-a    # 全图唯一，用于 related 和网址 #node-a
+        title: 知识块名
+        summary: 一句话
+        detail: |
+          详细说明，空行分段。
+        points: [要点 1, 要点 2]
+        related: [node-b]
+        questions: [想深入时可以继续问 AI 的问题]
+```
+
+内容同样要遵守下方「我的判断」的脱敏规则，公开前先给阿旻确认。
 
 ### 更新项目进展
 

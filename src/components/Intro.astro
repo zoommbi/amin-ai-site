@@ -11,6 +11,7 @@ const focuses = [
 const entries = [
   { href: '#judgments', title: '我的判断', desc: '在实践中形成、仍在修正的看法', icon: 'lightbulb', tint: 'amber' },
   { href: '#projects', title: '项目进展', desc: '正在推进的事，进度公开', icon: 'trending-up', tint: 'teal' },
+  { href: '#learning', title: '正在学习', desc: '梳理过的主题，做成知识地图', icon: 'map', tint: 'violet' },
 ] as const;
 ---
 <section id="about" class="intro">
@@ -161,7 +162,7 @@ const entries = [
       padding: 20px 22px;
     }
     .entries {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>

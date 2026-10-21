@@ -1,14 +1,15 @@
 ---
 const links = [
-  { href: '#about', label: '简介' },
-  { href: '#judgments', label: '我的判断' },
-  { href: '#projects', label: '项目进展' },
+  { href: '/#about', label: '简介' },
+  { href: '/#judgments', label: '我的判断' },
+  { href: '/#projects', label: '项目进展' },
+  { href: '/#learning', label: '学习' },
 ];
 ---
 <header class="site-header">
   <div class="container">
     <div class="bar glass">
-      <a class="brand" href="#top">阿旻<span>AI</span></a>
+      <a class="brand" href="/#top">阿旻<span>AI</span></a>
       <nav aria-label="页面导航">
         {links.map((l) => <a href={l.href}>{l.label}</a>)}
       </nav>
@@ -72,6 +73,10 @@ const links = [
     nav a {
       padding: 6px 5px;
       font-size: 0.85rem;
+    }
+    /* 太窄放不下四个入口：简介和点字标回顶部是一回事 */
+    nav a:first-child {
+      display: none;
     }
   }
 </style>
