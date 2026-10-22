@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import JudgmentWall from '../../components/JudgmentWall.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Icon from '../../components/Icon.astro';
+---
+<Base title="我的判断 · 阿旻AI" description="阿旻AI 在实践中形成、仍在修正的判断。">
+  <div id="top"></div>
+  <SiteHeader />
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>
+            <span class="icon-tile amber"><Icon name="lightbulb" /></span>
+            我的判断
+          </h2>
+          <p>在实践中形成、仍在修正的看法。轻点便签看详细说明，再点收起。</p>
+        </div>
+        <JudgmentWall />
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>

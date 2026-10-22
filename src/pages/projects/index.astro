@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import ProjectList from '../../components/ProjectList.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Icon from '../../components/Icon.astro';
+---
+<Base title="项目进展 · 阿旻AI" description="阿旻AI 正在推进的项目和进度。">
+  <div id="top"></div>
+  <SiteHeader />
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>
+            <span class="icon-tile teal"><Icon name="trending-up" /></span>
+            项目进展
+          </h2>
+          <p>正在推进的事。名称已做泛化处理。</p>
+        </div>
+        <ProjectList />
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>

@@ -1,0 +1,74 @@
+---
+import Icon from './Icon.astro';
+
+// 首页底部：各板块的入口，每个板块是独立页面
+const entries = [
+  { href: '/judgments/', title: '我的判断', desc: '在实践中形成、仍在修正的看法', icon: 'lightbulb', tint: 'amber' },
+  { href: '/projects/', title: '项目进展', desc: '正在推进的事，进度公开', icon: 'trending-up', tint: 'teal' },
+  { href: '/learning/', title: '正在学习', desc: '梳理过的主题，做成知识地图', icon: 'map', tint: 'violet' },
+] as const;
+---
+<div class="entries">
+  {entries.map((e) => (
+    <a class="entry glass" href={e.href}>
+      <span class:list={['icon-tile', 'sm', e.tint]}><Icon name={e.icon} size={20} /></span>
+      <span class="txt">
+        <strong>{e.title}</strong>
+        <small>{e.desc}</small>
+      </span>
+      <span class="arrow"><Icon name="arrow-right" size={18} stroke={2} /></span>
+    </a>
+  ))}
+</div>
+
+<style>
+  .entries {
+    display: grid;
+    gap: 12px;
+  }
+  .entry {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    color: var(--ink);
+    text-decoration: none;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .entry:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      var(--glass-shadow),
+      0 16px 34px -12px var(--shadow-tint);
+  }
+  .entry:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .entry .txt {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+  .entry small {
+    color: var(--ink-soft);
+  }
+  .entry .arrow {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    color: var(--accent);
+    background: var(--chip-bg);
+    box-shadow: var(--chip-shadow);
+  }
+  @media (min-width: 768px) {
+    .entries {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

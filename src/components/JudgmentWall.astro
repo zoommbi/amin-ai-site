@@ -1,8 +1,15 @@
 ---
 import { getCollection, render } from 'astro:content';
 
+interface Props {
+  featured?: boolean; // true 时只显示 featured: true 的判断（首页用）
+}
+const { featured = false } = Astro.props;
+
 // 读取 src/content/judgments/ 下所有 Markdown，新的在前；draft: true 的不显示
-const entries = (await getCollection('judgments', ({ data }) => !data.draft)).sort(
+const entries = (
+  await getCollection('judgments', ({ data }) => !data.draft && (!featured || data.featured))
+).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 

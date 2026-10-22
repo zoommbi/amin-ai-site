@@ -1,0 +1,117 @@
+---
+import Icon from './Icon.astro';
+
+// 「我像一株藤蔓」：长处和容易踩的坑。文案在这里改。
+// 取材自思考类私人仓库的藤蔓生长原则；只写一般性的自我认识，不写具体项目、合作方和命盘。
+const strengths = [
+  { title: '跨领域连接', text: '能在不同行业、不同问题之间看到联系，发现别人没注意的机会。' },
+  { title: '信息编排', text: '把零散的信息拆开、重组，变成能拿来做决定的结构。' },
+  { title: '借势生长', text: '善于借助平台、工具和合作伙伴，放大一个人的能力。' },
+  { title: '快速试做', text: '用 AI 把想法很快做成原型，让它尽早接受现实检验。' },
+];
+const pitfalls = [
+  { title: '想得太多', text: '思考和推演很容易超过行动，分析一轮又一轮，迟迟不落地。' },
+  { title: '什么都接', text: '因为“我会做”，就变成“都由我做”，忙碌却没有积累。' },
+  { title: '被外部要求带着走', text: '每天扮演什么角色，容易由别人临时的需求来决定。' },
+];
+---
+<section id="persona" class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>
+        <span class="icon-tile teal"><Icon name="sprout" /></span>
+        我像一株藤蔓
+      </h2>
+      <p>
+        柔韧，能跨领域攀援，善于借势生长。但藤蔓有个前提：根要扎在自己身上。这是我给自己选的形象，用来记住长处，也记住短处。
+      </p>
+    </div>
+
+    <div class="cols">
+      <div class="col glass">
+        <h3><Icon name="check" size={18} stroke={2.2} />我擅长</h3>
+        <ul>
+          {strengths.map((s) => (
+            <li><strong>{s.title}</strong><span>{s.text}</span></li>
+          ))}
+        </ul>
+      </div>
+      <div class="col glass pit">
+        <h3><Icon name="triangle-alert" size={18} stroke={2.2} />我容易踩的坑</h3>
+        <ul>
+          {pitfalls.map((s) => (
+            <li><strong>{s.title}</strong><span>{s.text}</span></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <blockquote class="glass">
+      <p>常问自己的一句话：如果眼前的项目、平台和合作都不在了，我还留下了什么能持续使用的能力？</p>
+    </blockquote>
+
+    <p class="note">
+      “藤蔓”借自五行里「乙木」的意象。我只把它当作自我提醒的比喻，不是命理判断，也不靠它做决定。
+    </p>
+  </div>
+</section>
+
+<style>
+  .cols {
+    display: grid;
+    gap: 14px;
+  }
+  .col {
+    padding: 18px 20px;
+  }
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.05rem;
+  }
+  h3 :global(svg) {
+    color: var(--accent);
+  }
+  ul {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  li {
+    display: flex;
+    flex-direction: column;
+  }
+  li span {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+  blockquote {
+    margin: 14px 0 0;
+    padding: 16px 20px;
+    font-family: var(--font-hand);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    border-left: 4px solid var(--accent);
+  }
+  blockquote p {
+    margin: 0;
+  }
+  .note {
+    margin: 14px 2px 0;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  @media (min-width: 768px) {
+    .cols {
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .col {
+      padding: 22px 26px;
+    }
+  }
+</style>

@@ -2,56 +2,57 @@
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import Intro from '../components/Intro.astro';
+import Persona from '../components/Persona.astro';
+import AiRules from '../components/AiRules.astro';
 import JudgmentWall from '../components/JudgmentWall.astro';
-import ProjectList from '../components/ProjectList.astro';
-import LearningList from '../components/LearningList.astro';
+import Explore from '../components/Explore.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Icon from '../components/Icon.astro';
+
+// 首页只讲「我是谁」；判断、项目、学习各有独立页面，这里只放精选和入口
 ---
 <Base>
   <div id="top"></div>
   <SiteHeader />
   <main>
     <Intro />
+    <Persona />
+    <AiRules />
 
     <section id="judgments" class="section">
       <div class="container">
         <div class="section-head">
           <h2>
             <span class="icon-tile amber"><Icon name="lightbulb" /></span>
-            我的判断
+            几条判断
           </h2>
-          <p>在实践中形成、仍在修正的看法。轻点便签看详细说明，再点收起。</p>
+          <p>在实践中形成、仍在修正的看法。轻点便签看详细说明。</p>
         </div>
-        <JudgmentWall />
+        <JudgmentWall featured />
+        <p class="more"><a href="/judgments/">看全部判断 →</a></p>
       </div>
     </section>
 
-    <section id="projects" class="section">
+    <section id="more" class="section">
       <div class="container">
         <div class="section-head">
-          <h2>
-            <span class="icon-tile teal"><Icon name="trending-up" /></span>
-            项目进展
-          </h2>
-          <p>正在推进的事。名称已做泛化处理。</p>
+          <h2>还想多了解一点</h2>
+          <p>我在推进的事、正在学习的主题，都放在单独的页面里。</p>
         </div>
-        <ProjectList />
-      </div>
-    </section>
-
-    <section id="learning" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>
-            <span class="icon-tile violet"><Icon name="map" /></span>
-            正在学习
-          </h2>
-          <p>和 AI 一起梳理过的主题，整理成知识地图。点开地图，轻点知识块看细节。</p>
-        </div>
-        <LearningList />
+        <Explore />
       </div>
     </section>
   </main>
   <SiteFooter />
 </Base>
+
+<style>
+  .more {
+    margin: 20px 0 0;
+    text-align: right;
+  }
+  .more a {
+    text-decoration: none;
+    font-weight: 600;
+  }
+</style>
