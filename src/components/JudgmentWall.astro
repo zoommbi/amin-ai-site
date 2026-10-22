@@ -1,40 +1,31 @@
 ---
 import { getCollection, render } from 'astro:content';
 
+interface Props {
+  featured?: boolean; // true 时只显示 featured: true 的判断（首页用）
+}
+const { featured = false } = Astro.props;
+
 // 读取 src/content/judgments/ 下所有 Markdown，新的在前；draft: true 的不显示
-const entries = (await getCollection('judgments', ({ data }) => !data.draft)).sort(
+const entries = (
+  await getCollection('judgments', ({ data }) => !data.draft && (!featured || data.featured))
+).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
-
-// 便签色：用配色方案里的 --note-1 ~ --note-5
-const NOTE_COLORS = 5;
-
-// 按 id 生成稳定的"随机"值：每次构建颜色和倾斜都一致
-function hash(str: string) {
-  let h = 0;
-  for (const ch of str) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-  return h;
-}
 
 // 只显示年月：很多判断只记录到形成的月份
 const fmt = (d: Date) => d.toISOString().slice(0, 7).replace('-', '.');
 
 const notes = await Promise.all(
-  entries.map(async (entry, i) => {
-    const h = hash(entry.id);
+  entries.map(async (entry) => {
     const { Content } = await render(entry);
-    return {
-      entry,
-      Content,
-      color: `var(--note-${(i % NOTE_COLORS) + 1})`, // 按顺序轮换，相邻便签不撞色
-      tilt: ((h % 9) - 4) * 0.6, // -2.4° ~ 2.4°
-    };
+    return { entry, Content };
   }),
 );
 ---
 <div class="wall">
-  {notes.map(({ entry, Content, color, tilt }) => (
-    <article class="note" style={`--note-bg:${color};--tilt:${tilt}deg`}>
+  {notes.map(({ entry, Content }) => (
+    <article class="note glass">
       <button
         type="button"
         class="note-face"
@@ -59,7 +50,7 @@ const notes = await Promise.all(
 </div>
 
 <script>
-  // 轻点便签：原地展开 / 收起，不跳转
+  // 轻点卡片：原地展开 / 收起，不跳转
   document.querySelectorAll<HTMLElement>('.note').forEach((note) => {
     const face = note.querySelector<HTMLButtonElement>('.note-face');
     const detail = note.querySelector<HTMLElement>('.note-detail');
@@ -76,56 +67,23 @@ const notes = await Promise.all(
 </script>
 
 <style>
+  /* 和首页其他卡片统一：白色玻璃卡片 */
   .wall {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px 14px;
-    padding: 6px 2px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
   }
   .note {
-    position: relative;
-    /* 带颜色的磨砂玻璃便签 */
-    isolation: isolate;
-    background:
-      linear-gradient(160deg, var(--sheen), transparent 55%),
-      color-mix(in srgb, var(--note-bg) var(--note-mix), transparent);
-    border: 1px solid var(--note-border);
-    border-radius: 18px;
-    backdrop-filter: var(--note-blur);
-    -webkit-backdrop-filter: var(--note-blur);
-    box-shadow: var(--note-shadow);
-    transform: rotate(var(--tilt));
-    transition:
-      transform 0.25s ease,
-      box-shadow 0.25s ease;
     cursor: pointer;
-  }
-  /* 顶部"胶带"：一小条透明玻璃 */
-  .note::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    width: 56px;
-    height: 16px;
-    transform: translateX(-50%) rotate(-3deg);
-    border-radius: 4px;
-    background: var(--tape-bg);
-    border: 1px solid var(--tape-border);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
   .note:hover {
-    transform: rotate(0deg) translateY(-2px);
-  }
-  /* 手机两列太窄：展开时占满一行 */
-  .note.is-open {
-    grid-column: 1 / -1;
-    transform: rotate(0deg);
+    transform: translateY(-2px);
     box-shadow:
-      var(--note-shadow),
-      0 18px 34px -14px var(--shadow-tint);
+      var(--glass-shadow),
+      0 16px 34px -12px var(--shadow-tint);
   }
   .note-face {
     all: unset;
@@ -133,18 +91,14 @@ const notes = await Promise.all(
     display: flex;
     flex-direction: column;
     width: 100%;
-    aspect-ratio: 1 / 1;
-    padding: 18px 14px 12px;
+    padding: 16px 18px;
     gap: 8px;
     color: var(--ink);
   }
   .note-face:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
-  }
-  .note.is-open .note-face {
-    aspect-ratio: auto;
-    padding-bottom: 6px;
+    border-radius: var(--radius);
   }
   .badge {
     align-self: flex-start;
@@ -158,16 +112,15 @@ const notes = await Promise.all(
   }
   .note-title {
     flex: 1;
-    font-family: var(--font-hand);
-    font-size: 1.05rem;
-    line-height: 1.5;
+    font-size: 1.02rem;
+    line-height: 1.55;
     font-weight: 600;
   }
   .note-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 2px 8px;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     color: var(--ink-soft);
   }
   .tags {
@@ -176,39 +129,31 @@ const notes = await Promise.all(
     gap: 6px;
   }
   .note-detail {
-    padding: 4px 16px 14px;
-    font-size: 0.95rem;
+    margin: 0 18px;
+    padding: 4px 0 14px;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
     border-top: 1px dashed var(--line-soft);
-    margin: 0 14px;
-    padding-left: 0;
-    padding-right: 0;
   }
   .note-detail :global(p) {
     margin: 10px 0 0;
   }
   .note-detail .hint {
     font-size: 0.75rem;
-    color: var(--ink-soft);
     text-align: right;
   }
   @media (min-width: 768px) {
     .wall {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 28px 24px;
+      gap: 20px;
+      align-items: start;
     }
     .note-face {
-      padding: 24px 20px 16px;
+      padding: 20px 22px;
+      min-height: 150px;
     }
-    .note-title {
-      font-size: 1.25rem;
-    }
-    .note-meta {
-      font-size: 0.8rem;
-    }
-    /* 桌面列够宽：展开时留在原列，不占整行 */
-    .note.is-open {
-      grid-column: auto;
-      align-self: start;
+    .note-detail {
+      margin: 0 22px;
     }
   }
 </style>

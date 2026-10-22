@@ -29,15 +29,17 @@
 ├── .github/ISSUE_TEMPLATE/    # 任务模板
 ├── public/                    # 静态资源（favicon 等）
 └── src/
-    ├── pages/index.astro      # 首页（单页滚动）
+    ├── pages/index.astro      # 首页：只讲「我是谁」，其余板块从顶部导航进入
     ├── layouts/Base.astro     # 页面骨架
     ├── styles/global.css      # 全局样式
     ├── styles/themes.css      # 配色方案（颜色变量只在这里定义）
     ├── config.ts              # 当前配色 SITE_THEME
     ├── components/
     │   ├── SiteHeader.astro   # 顶部导航
-    │   ├── Intro.astro        # 简介（文案在文件顶部）
-    │   ├── JudgmentWall.astro # 「我的判断」便签墙
+    │   ├── Intro.astro        # 首页开头：一句话定位（文案在文件里）
+    │   ├── Persona.astro      # 「我像一株藤蔓」：长处与容易踩的坑
+    │   ├── AiRules.astro      # 「我给 AI 定的规则」
+    │   ├── JudgmentWall.astro # 「我的判断」卡片（featured 只显示精选）
     │   ├── ProjectList.astro  # 「项目进展」卡片
     │   ├── LearningList.astro # 「正在学习」地图卡片
     │   ├── KnowledgeMap.astro # 知识地图（板块 + 知识块 + 详情弹窗）
@@ -45,6 +47,8 @@
     ├── content.config.ts      # 内容集合定义
     ├── content/judgments/     # 每条判断一个 .md 文件
     ├── content/maps/          # 每张知识地图一个 .yaml 文件
+    ├── pages/judgments/       # 全部判断（/judgments/）
+    ├── pages/projects/        # 项目进展（/projects/）
     ├── pages/learning/        # 学习索引页 + 每张地图一页（/learning/文件名/）
     └── data/projects.yaml     # 项目进展的唯一数据源
 ```
@@ -58,6 +62,7 @@
 title: 一句话判断
 date: 2026-10-18
 tags: [标签1, 标签2]
+# featured: true # 同时放到首页「几条判断」（建议保持 3 条）
 # sample: true   # 示例内容才加
 # draft: true    # 暂不公开才加
 ---
@@ -120,6 +125,12 @@ regions:              # 板块
 - 判断可以取材自阿旻的思考类私人仓库，但只取一般性的原则与判断，**去掉具体项目、业务案例、
   人物与角色分工、公司信息和未经核实的引文**。本仓库是公开的：**先把草稿给阿旻确认，再提交**。
 - 判断的 `date` 是形成时间；页面只显示年月。
+
+### 首页「我是谁」
+
+- 首页只讲阿旻这个人：定位、长处与短处、给 AI 的规则、几条精选判断；具体板块放独立页面，从顶部导航进入，首页底部不再重复放入口。
+- 「藤蔓／乙木」等五行说法只作自我提醒的比喻，页面上要说明不是命理判断。
+  **不公开**八字、命盘原文、公司名称、合作方，也不用五行给他人定角色。
 
 ## 工作流程
 

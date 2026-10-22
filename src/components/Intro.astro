@@ -1,18 +1,6 @@
 ---
-import Icon from './Icon.astro';
-
-// 简介区文案。
-const focuses = [
-  { icon: 'workflow', tint: '', title: 'AI 工作流', text: '先编排，再自动化。把流程想清楚，再交给 AI 和 Agent 去跑。' },
-  { icon: 'graduation-cap', tint: 'violet', title: '教育', text: '答案越来越便宜，提问、判断和动手实践越来越重要。' },
-  { icon: 'flask-conical', tint: 'teal', title: '小项目实践', text: '用小而真实的项目检验想法，让认知接受现实的反馈。' },
-] as const;
-
-const entries = [
-  { href: '#judgments', title: '我的判断', desc: '在实践中形成、仍在修正的看法', icon: 'lightbulb', tint: 'amber' },
-  { href: '#projects', title: '项目进展', desc: '正在推进的事，进度公开', icon: 'trending-up', tint: 'teal' },
-  { href: '#learning', title: '正在学习', desc: '梳理过的主题，做成知识地图', icon: 'map', tint: 'violet' },
-] as const;
+// 首页开头：我是谁。文案在这里改。
+const focuses = ['信息编排', 'AI 工作流', '产品研发', '教育', '小项目实践'];
 ---
 <section id="about" class="intro">
   <div class="container">
@@ -20,39 +8,19 @@ const entries = [
     <h1>阿旻<span>AI</span></h1>
     <p class="lead">
       一个用 AI 重新组织工作的人。我关心的问题是：一个人，怎样获得过去只有组织才有的能力？
-      这里记录我的判断，和正在推进的项目。
     </p>
-
-    <ul class="focus">
-      {focuses.map((f) => (
-        <li class="glass">
-          <span class:list={['icon-tile', f.tint]}><Icon name={f.icon} /></span>
-          <div>
-            <h3>{f.title}</h3>
-            <p>{f.text}</p>
-          </div>
-        </li>
-      ))}
+    <p class="sub">
+      这个网站是我的名片：我是什么样的人、怎么和 AI 一起工作、形成了哪些判断，都公开在这里。
+    </p>
+    <ul class="focus" aria-label="我关注的方向">
+      {focuses.map((f) => <li>{f}</li>)}
     </ul>
-
-    <div class="entries">
-      {entries.map((e) => (
-        <a class="entry glass" href={e.href}>
-          <span class:list={['icon-tile', 'sm', e.tint]}><Icon name={e.icon} size={20} /></span>
-          <span class="txt">
-            <strong>{e.title}</strong>
-            <small>{e.desc}</small>
-          </span>
-          <span class="arrow"><Icon name="arrow-down" size={18} stroke={2} /></span>
-        </a>
-      ))}
-    </div>
   </div>
 </section>
 
 <style>
   .intro {
-    padding: 48px 0 24px;
+    padding: 48px 0 8px;
   }
   .hello {
     margin: 0;
@@ -72,97 +40,40 @@ const entries = [
     margin-left: 0.06em;
   }
   .lead {
-    font-size: 1.05rem;
-    margin: 0 0 28px;
-    max-width: 36em;
+    font-size: 1.15rem;
+    margin: 0 0 10px;
+    max-width: 30em;
   }
-  .lead em {
+  .sub {
+    margin: 0 0 20px;
     color: var(--ink-soft);
-    font-style: normal;
-    font-size: 0.85rem;
+    max-width: 34em;
   }
   .focus {
     list-style: none;
-    margin: 0 0 28px;
+    margin: 0;
     padding: 0;
-    display: grid;
-    gap: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
   }
   .focus li {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    padding: 16px 18px;
-  }
-  .focus h3 {
-    font-size: 1rem;
-    margin-top: 2px;
-  }
-  .focus p {
-    margin: 2px 0 0;
-    color: var(--ink-soft);
-    font-size: 0.92rem;
-  }
-  .entries {
-    display: grid;
-    gap: 12px;
-  }
-  .entry {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    color: var(--ink);
-    text-decoration: none;
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-  }
-  .entry:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      var(--glass-shadow),
-      0 16px 34px -12px var(--shadow-tint);
-  }
-  .entry:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-  }
-  .entry .txt {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-width: 0;
-  }
-  .entry small {
-    color: var(--ink-soft);
-  }
-  .entry .arrow {
-    display: inline-grid;
-    place-items: center;
-    width: 30px;
-    height: 30px;
+    font-size: 0.85rem;
+    padding: 4px 12px;
     border-radius: 999px;
-    color: var(--accent);
     background: var(--chip-bg);
     box-shadow: var(--chip-shadow);
+    color: var(--ink-soft);
   }
   @media (min-width: 768px) {
     .intro {
-      padding: 88px 0 32px;
+      padding: 88px 0 16px;
     }
     h1 {
       font-size: 3.4rem;
     }
-    .focus {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .focus li {
-      flex-direction: column;
-      padding: 20px 22px;
-    }
-    .entries {
-      grid-template-columns: repeat(3, 1fr);
+    .lead {
+      font-size: 1.3rem;
     }
   }
 </style>

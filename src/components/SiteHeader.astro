@@ -1,17 +1,23 @@
 ---
 const links = [
-  { href: '/#about', label: '简介' },
-  { href: '/#judgments', label: '我的判断' },
-  { href: '/#projects', label: '项目进展' },
-  { href: '/#learning', label: '学习' },
+  { href: '/', label: '我是谁' },
+  { href: '/judgments/', label: '判断' },
+  { href: '/projects/', label: '项目' },
+  { href: '/learning/', label: '学习' },
 ];
+
+// 当前页面的导航高亮
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 ---
 <header class="site-header">
   <div class="container">
     <div class="bar glass">
-      <a class="brand" href="/#top">阿旻<span>AI</span></a>
+      <a class="brand" href="/">阿旻<span>AI</span></a>
       <nav aria-label="页面导航">
-        {links.map((l) => <a href={l.href}>{l.label}</a>)}
+        {links.map((l) => (
+          <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>
+        ))}
       </nav>
     </div>
   </div>
@@ -59,6 +65,10 @@ const links = [
     border-radius: 999px;
     white-space: nowrap;
   }
+  nav a[aria-current='page'] {
+    color: var(--accent);
+    font-weight: 600;
+  }
   nav a:hover,
   nav a:focus-visible {
     background: var(--chip-bg);
@@ -74,7 +84,7 @@ const links = [
       padding: 6px 5px;
       font-size: 0.85rem;
     }
-    /* 太窄放不下四个入口：简介和点字标回顶部是一回事 */
+    /* 太窄放不下四个入口：「我是谁」和点字标回首页是一回事 */
     nav a:first-child {
       display: none;
     }
