@@ -39,7 +39,7 @@
     │   ├── Intro.astro        # 首页开头：一句话定位（文案在文件里）
     │   ├── Persona.astro      # 「我像一株藤蔓」：长处与容易踩的坑
     │   ├── AiRules.astro      # 「我给 AI 定的规则」
-    │   ├── JudgmentWall.astro # 「我的判断」便签墙
+    │   ├── JudgmentWall.astro # 「我的判断」卡片（featured 只显示精选）
     │   ├── ProjectList.astro  # 「项目进展」卡片
     │   ├── LearningList.astro # 「正在学习」地图卡片
     │   ├── KnowledgeMap.astro # 知识地图（板块 + 知识块 + 详情弹窗）
