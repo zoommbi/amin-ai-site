@@ -23,15 +23,10 @@ const notes = await Promise.all(
   }),
 );
 ---
-<div class="wall">
-  {notes.map(({ entry, Content }) => (
-    <article class="note glass">
-      <button
-        type="button"
-        class="note-face"
-        aria-expanded="false"
-        aria-controls={`judgment-${entry.id}`}
-      >
+<div class="judgments">
+  <div class="wall">
+    {notes.map(({ entry }) => (
+      <button type="button" class="note glass" data-judgment={entry.id} aria-haspopup="dialog">
         {entry.data.sample && <span class="badge">示例</span>}
         <span class="note-title">{entry.data.title}</span>
         <span class="note-meta">
@@ -41,29 +36,94 @@ const notes = await Promise.all(
           </span>
         </span>
       </button>
-      <div class="note-detail" id={`judgment-${entry.id}`} hidden>
-        <Content />
-        <p class="hint">轻点收起</p>
-      </div>
-    </article>
-  ))}
+    ))}
+  </div>
+
+  <dialog class="sheet" aria-labelledby="judgment-sheet-title">
+    <div class="sheet-inner">
+      <span class="grip" aria-hidden="true"></span>
+      <button type="button" class="close" aria-label="关闭">×</button>
+      {notes.map(({ entry, Content }) => (
+        <article class="card" data-card={entry.id} hidden>
+          <p class="card-meta">
+            {fmt(entry.data.date)}
+            {entry.data.tags.map((t) => <span>#{t}</span>)}
+          </p>
+          <h3>{entry.data.title}</h3>
+          <div class="body"><Content /></div>
+        </article>
+      ))}
+    </div>
+  </dialog>
 </div>
 
 <script>
-  // 轻点卡片：原地展开 / 收起，不跳转
-  document.querySelectorAll<HTMLElement>('.note').forEach((note) => {
-    const face = note.querySelector<HTMLButtonElement>('.note-face');
-    const detail = note.querySelector<HTMLElement>('.note-detail');
-    if (!face || !detail) return;
-    note.addEventListener('click', (e) => {
-      // 详细说明里的链接正常打开，不触发收起
-      if ((e.target as HTMLElement).closest('a')) return;
-      const open = face.getAttribute('aria-expanded') === 'true';
-      face.setAttribute('aria-expanded', String(!open));
-      detail.hidden = open;
-      note.classList.toggle('is-open', !open);
+  // 轻点判断卡片：弹出详情面板（手机是底部抽屉）。点遮罩、点 ×、按 Esc 或下滑关闭
+  const root = document.querySelector<HTMLElement>('.judgments');
+  const dialog = root?.querySelector<HTMLDialogElement>('dialog.sheet');
+  const inner = dialog?.querySelector<HTMLElement>('.sheet-inner');
+  if (root && dialog && inner) {
+    const cards = dialog.querySelectorAll<HTMLElement>('[data-card]');
+
+    const open = (id: string) => {
+      let found = false;
+      cards.forEach((c) => {
+        const match = c.dataset.card === id;
+        c.hidden = !match;
+        if (match) {
+          c.querySelector('h3')?.setAttribute('id', 'judgment-sheet-title');
+          found = true;
+        } else {
+          c.querySelector('h3')?.removeAttribute('id');
+        }
+      });
+      if (!found) return;
+      inner.scrollTop = 0;
+      inner.style.transform = '';
+      if (!dialog.open) dialog.showModal();
+      history.replaceState(null, '', `#${id}`);
+    };
+
+    const close = () => dialog.close();
+    dialog.addEventListener('close', () => {
+      history.replaceState(null, '', location.pathname + location.search);
     });
-  });
+
+    root.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.closest('a')) return; // 详情里的链接正常打开
+      const card = t.closest<HTMLElement>('[data-judgment]');
+      if (card) return open(card.dataset.judgment!);
+      if (t.closest('.close')) return close();
+      // 点到面板外面的遮罩：关闭
+      if (t === dialog) close();
+    });
+
+    // 手机上从顶部往下拖：内容已滚到最上面时，拖过 90px 就关闭
+    let startY = 0;
+    let dy = 0;
+    let dragging = false;
+    inner.addEventListener('touchstart', (e) => {
+      dragging = inner.scrollTop <= 0;
+      startY = e.touches[0].clientY;
+      dy = 0;
+    }, { passive: true });
+    inner.addEventListener('touchmove', (e) => {
+      if (!dragging) return;
+      dy = Math.max(0, e.touches[0].clientY - startY);
+      inner.style.transform = dy ? `translateY(${dy}px)` : '';
+    }, { passive: true });
+    inner.addEventListener('touchend', () => {
+      if (!dragging) return;
+      dragging = false;
+      inner.style.transform = '';
+      if (dy > 90) close();
+    });
+
+    // 网址带 #判断id 时直接打开，方便分享
+    const initial = decodeURIComponent(location.hash.slice(1));
+    if (initial) open(initial);
+  }
 </script>
 
 <style>
@@ -74,10 +134,28 @@ const notes = await Promise.all(
     gap: 12px;
   }
   .note {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 18px;
+    color: var(--ink);
     cursor: pointer;
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease;
+  }
+  /* all: unset 会清掉 .glass 的样式，这里补回来 */
+  .note.glass {
+    position: relative;
+    isolation: isolate;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
   }
   .note:hover {
     transform: translateY(-2px);
@@ -85,20 +163,9 @@ const notes = await Promise.all(
       var(--glass-shadow),
       0 16px 34px -12px var(--shadow-tint);
   }
-  .note-face {
-    all: unset;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 16px 18px;
-    gap: 8px;
-    color: var(--ink);
-  }
-  .note-face:focus-visible {
+  .note:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
-    border-radius: var(--radius);
   }
   .badge {
     align-self: flex-start;
@@ -128,32 +195,118 @@ const notes = await Promise.all(
     flex-wrap: wrap;
     gap: 6px;
   }
-  .note-detail {
-    margin: 0 18px;
-    padding: 4px 0 14px;
-    font-size: 0.92rem;
+
+  /* 详情面板：手机是底部抽屉，桌面居中（和学习地图的弹窗一致） */
+  .sheet {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    width: 100%;
+    max-width: 100%;
+    max-height: 86vh;
+    margin: auto 0 0;
+    overflow: visible;
+  }
+  .sheet::backdrop {
+    background: rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .sheet[open] {
+    animation: rise 0.25s ease;
+  }
+  @keyframes rise {
+    from {
+      transform: translateY(24px);
+      opacity: 0;
+    }
+  }
+  /* 弹窗打开时背后页面不跟着滚 */
+  :global(html:has(dialog.sheet[open])) {
+    overflow: hidden;
+  }
+  .sheet-inner {
+    position: relative;
+    max-height: 86vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 12px 20px 32px;
+    border-radius: 22px 22px 0 0;
+    background: var(--glass-fallback);
+    box-shadow: 0 -10px 40px -10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease;
+  }
+  .grip {
+    display: block;
+    width: 40px;
+    height: 5px;
+    margin: 0 auto 10px;
+    border-radius: 999px;
+    background: var(--line-soft);
+  }
+  .close {
+    all: unset;
+    position: sticky;
+    top: 0;
+    float: right;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
     color: var(--ink-soft);
-    border-top: 1px dashed var(--line-soft);
+    background: var(--chip-bg);
+    box-shadow: var(--chip-shadow);
+    z-index: 1;
   }
-  .note-detail :global(p) {
-    margin: 10px 0 0;
+  .close:focus-visible {
+    outline: 2px solid var(--accent);
   }
-  .note-detail .hint {
-    font-size: 0.75rem;
-    text-align: right;
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 8px;
+    margin: 4px 0 6px;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  .card h3 {
+    font-size: 1.3rem;
+    line-height: 1.45;
+    padding-right: 40px;
+  }
+  .body {
+    margin-top: 6px;
+    color: var(--ink);
+  }
+  .body :global(p) {
+    margin: 12px 0 0;
   }
   @media (min-width: 768px) {
     .wall {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 20px;
-      align-items: start;
+      align-items: stretch;
     }
-    .note-face {
+    .note {
       padding: 20px 22px;
       min-height: 150px;
     }
-    .note-detail {
-      margin: 0 22px;
+    .sheet {
+      max-width: 560px;
+      margin: auto;
+    }
+    .sheet-inner {
+      border-radius: 22px;
+      padding: 24px 28px 32px;
+      max-height: 80vh;
+    }
+    .grip {
+      display: none;
     }
   }
 </style>
