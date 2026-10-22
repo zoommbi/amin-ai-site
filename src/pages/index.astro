@@ -5,11 +5,10 @@ import Intro from '../components/Intro.astro';
 import Persona from '../components/Persona.astro';
 import AiRules from '../components/AiRules.astro';
 import JudgmentWall from '../components/JudgmentWall.astro';
-import Explore from '../components/Explore.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Icon from '../components/Icon.astro';
 
-// 首页只讲「我是谁」；判断、项目、学习各有独立页面，这里只放精选和入口
+// 首页只讲「我是谁」；判断、项目、学习各有独立页面，从顶部导航进入
 ---
 <Base>
   <div id="top"></div>
@@ -30,16 +29,6 @@ import Icon from '../components/Icon.astro';
         </div>
         <JudgmentWall featured />
         <p class="more"><a href="/judgments/">看全部判断 →</a></p>
-      </div>
-    </section>
-
-    <section id="more" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>还想多了解一点</h2>
-          <p>我在推进的事、正在学习的主题，都放在单独的页面里。</p>
-        </div>
-        <Explore />
       </div>
     </section>
   </main>
