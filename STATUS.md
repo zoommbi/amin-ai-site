@@ -30,6 +30,7 @@
 - 2026-10-22｜判断卡片改为弹窗查看（草稿 PR）：轻点卡片弹出详情，手机是底部抽屉（可下滑关闭、长内容在框内滑动），桌面居中；点遮罩、×、Esc 关闭；网址 #判断id 可直接打开｜下一步：阿旻已确认，合并上线
 - 2026-10-23｜新增第 11 条判断「AI 会像水电一样普惠，利润落在握住客户的应用上」（经阿旻确认，已脱敏；完整版在思考类私人仓库）｜下一步：持续观察，一年后回看验证
 - 2026-10-23｜GEO（让 AI 搜索能读懂、引用网站）（草稿 PR）：robots.txt 明确欢迎各家 AI 爬虫、sitemap.xml、llms.txt / llms-full.txt（给 AI 读的纯文本版，含判断全文）、全站 canonical 与分享卡片 meta、JSON-LD（首页 Person/WebSite，每条判断 Article）；每条判断有了独立页面 /judgments/id/，弹窗底部加「这条判断的单独页面」链接；页面文案未改；public/_headers 给 txt/xml 标明 UTF-8，修复手机上 llms.txt 中文乱码｜下一步：阿旻已确认，合并上线；以后绑定域名时再检查 Cloudflare 的 AI 爬虫拦截设置
+- 2026-10-23｜按阿旻提供的 X 账号，在首页 Person 结构化数据（sameAs）、页面 rel="me" 和 llms.txt 里加上 https://x.com/mileshuang1997；页面上不显示｜下一步：其他平台账号有了再加
 
 ## 进行中
 
@@ -52,5 +53,5 @@
 - [x] 线上地址：已改为 https://amin-ai-site.aminai.workers.dev（2026-10-18）
 - [x] 首页「我是谁」：藤蔓长处与短处、给 AI 的 4 条规则、3 条精选判断，去掉底部入口、判断改白色卡片（2026-10-22 阿旻确认上线）
 - [ ] GEO：以后绑定自己的域名时，到 Cloudflare 该域名的「AI Crawl Control」确认没有拦截 AI 爬虫、没有开启托管 robots.txt（现在用 workers.dev 地址，没有这些开关，不受影响）
-- [ ] GEO：是否在 Person 结构化数据里加上公开的社交账号（公众号、小红书、X 等），帮 AI 确认「阿旻AI」是同一个人
+- [x] GEO：结构化数据加上 X 账号 @mileshuang1997（2026-10-23）；其他平台账号以后有再加到 src/site.ts 的 profiles
 - [x] 便签字体：不额外引入字体，保持系统字体（2026-10-20）

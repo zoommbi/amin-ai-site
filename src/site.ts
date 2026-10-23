@@ -8,6 +8,8 @@ export const SITE = {
   tagline: '一个用 AI 重新组织工作的人。我关心的问题是：一个人，怎样获得过去只有组织才有的能力？',
   focuses: ['信息编排', 'AI 工作流', '产品研发', '教育', '小项目实践'],
   locale: 'zh-CN',
+  // 公开的社交账号：写进结构化数据（sameAs）和 rel="me"，让 AI 确认是同一个人
+  profiles: ['https://x.com/mileshuang1997'],
 };
 
 // 首页「我是谁」的 Person 结构化数据，其他页面用 @id 引用它
@@ -20,4 +22,5 @@ export const personJsonLd = (site: URL) => ({
   url: new URL('/', site).href,
   description: SITE.tagline,
   knowsAbout: SITE.focuses,
+  sameAs: SITE.profiles,
 });
