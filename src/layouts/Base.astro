@@ -43,6 +43,7 @@ const themeIds = THEMES.map((t) => t.id);
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap.xml" />
+    {SITE.profiles.map((href) => <link rel="me" href={href} />)}
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:locale" content="zh_CN" />

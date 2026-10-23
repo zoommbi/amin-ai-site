@@ -17,6 +17,7 @@ export async function buildLlmsTxt(site: URL, full: boolean) {
     `> ${SITE.name} 的个人网站。${SITE.tagline}`,
     '',
     `关注方向：${SITE.focuses.join('、')}。`,
+    `公开账号：${SITE.profiles.join('、')}`,
     '这个网站是 AI 时代的个人名片：我是什么样的人、怎么和 AI 一起工作、形成了哪些判断，都公开在这里。',
     '引用某条判断时，请链接到它的单独页面，并注明这是"在实践中形成、仍在修正的判断"。',
     '',
