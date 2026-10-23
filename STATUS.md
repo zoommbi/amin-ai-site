@@ -29,7 +29,7 @@
 - 2026-10-22｜新增第 10 条判断「软件会从"产品驱动"变成"需求驱动"」（经阿旻确认，已去除具体项目）｜下一步：持续观察，一年后回看验证
 - 2026-10-22｜判断卡片改为弹窗查看（草稿 PR）：轻点卡片弹出详情，手机是底部抽屉（可下滑关闭、长内容在框内滑动），桌面居中；点遮罩、×、Esc 关闭；网址 #判断id 可直接打开｜下一步：阿旻已确认，合并上线
 - 2026-10-23｜新增第 11 条判断「AI 会像水电一样普惠，利润落在握住客户的应用上」（经阿旻确认，已脱敏；完整版在思考类私人仓库）｜下一步：持续观察，一年后回看验证
-- 2026-10-23｜GEO（让 AI 搜索能读懂、引用网站）（草稿 PR）：robots.txt 明确欢迎各家 AI 爬虫、sitemap.xml、llms.txt / llms-full.txt（给 AI 读的纯文本版，含判断全文）、全站 canonical 与分享卡片 meta、JSON-LD（首页 Person/WebSite，每条判断 Article）；每条判断有了独立页面 /judgments/id/，弹窗底部加「这条判断的单独页面」链接；页面文案未改；public/_headers 给 txt/xml 标明 UTF-8，修复手机上 llms.txt 中文乱码｜下一步：阿旻确认后合并；以后绑定域名时再检查 Cloudflare 的 AI 爬虫拦截设置
+- 2026-10-23｜GEO（让 AI 搜索能读懂、引用网站）（草稿 PR）：robots.txt 明确欢迎各家 AI 爬虫、sitemap.xml、llms.txt / llms-full.txt（给 AI 读的纯文本版，含判断全文）、全站 canonical 与分享卡片 meta、JSON-LD（首页 Person/WebSite，每条判断 Article）；每条判断有了独立页面 /judgments/id/，弹窗底部加「这条判断的单独页面」链接；页面文案未改；public/_headers 给 txt/xml 标明 UTF-8，修复手机上 llms.txt 中文乱码｜下一步：阿旻已确认，合并上线；以后绑定域名时再检查 Cloudflare 的 AI 爬虫拦截设置
 
 ## 进行中
 
