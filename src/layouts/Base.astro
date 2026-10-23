@@ -3,16 +3,27 @@ import '../styles/themes.css';
 import '../styles/global.css';
 import { SITE_THEME, THEMES } from '../config';
 import ThemePreview from '../components/ThemePreview.astro';
+import { SITE } from '../site';
 
 interface Props {
   title?: string;
   description?: string;
+  type?: 'website' | 'article';
+  jsonLd?: Record<string, unknown>[]; // 页面的结构化数据，供搜索引擎和 AI 理解
 }
 
 const {
-  title = '阿旻AI',
-  description = '阿旻AI 的个人网站：AI 工作流、教育与小项目实践。',
+  title = SITE.name,
+  description = SITE.description,
+  type = 'website',
+  jsonLd = [],
 } = Astro.props;
+
+// canonical：去掉 ?theme= 等参数，同一内容只有一个网址
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const structured = jsonLd.length
+  ? JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonLd }).replaceAll('<', '\\u003c')
+  : null;
 
 const themeBg = THEMES.find((t) => t.id === SITE_THEME)?.bg;
 const themeIds = THEMES.map((t) => t.id);
@@ -30,7 +41,17 @@ const themeIds = THEMES.map((t) => t.id);
       if (t && themeIds.includes(t)) document.documentElement.dataset.theme = t;
     </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
     <title>{title}</title>
+    {structured && <script type="application/ld+json" set:html={structured} />}
   </head>
   <body>
     <slot />

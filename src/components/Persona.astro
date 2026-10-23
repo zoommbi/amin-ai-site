@@ -1,19 +1,8 @@
 ---
 import Icon from './Icon.astro';
 
-// 「我像一株藤蔓」：长处和容易踩的坑。文案在这里改。
-// 取材自思考类私人仓库的藤蔓生长原则；只写一般性的自我认识，不写具体项目、合作方和命盘。
-const strengths = [
-  { title: '跨领域连接', text: '能在不同行业、不同问题之间看到联系，发现别人没注意的机会。' },
-  { title: '信息编排', text: '把零散的信息拆开、重组，变成能拿来做决定的结构。' },
-  { title: '借势生长', text: '善于借助平台、工具和合作伙伴，放大一个人的能力。' },
-  { title: '快速试做', text: '用 AI 把想法很快做成原型，让它尽早接受现实检验。' },
-];
-const pitfalls = [
-  { title: '想得太多', text: '思考和推演很容易超过行动，分析一轮又一轮，迟迟不落地。' },
-  { title: '什么都接', text: '因为“我会做”，就变成“都由我做”，忙碌却没有积累。' },
-  { title: '被外部要求带着走', text: '每天扮演什么角色，容易由别人临时的需求来决定。' },
-];
+// 「我像一株藤蔓」：长处和容易踩的坑。文案在 src/data/profile.ts 里改。
+import { strengths, pitfalls } from '../data/profile';
 ---
 <section id="persona" class="section">
   <div class="container">

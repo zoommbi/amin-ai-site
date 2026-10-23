@@ -1,29 +1,8 @@
 ---
 import Icon from './Icon.astro';
 
-// 「我给 AI 定的规则」：针对 Persona 里的坑，我让 AI 怎么配合我。文案在这里改。
-const rules = [
-  {
-    title: '别陪我空想',
-    text: '每轮讨论最后都要回答：这改变了什么行动？给我一个今天就能做的最小动作。',
-    fixes: '想得太多',
-  },
-  {
-    title: '先帮我把流程想清楚，再自动化',
-    text: '流程没理顺就交给 Agent，只会把混乱放大。先编排，再自动化。',
-    fixes: '想得太多',
-  },
-  {
-    title: '提醒我修剪',
-    text: '遇到新机会先问三件事：能强化我的根吗？服务我的目标吗？值得我亲自做吗？',
-    fixes: '什么都接',
-  },
-  {
-    title: '判断和责任归我',
-    text: 'AI 分担信息处理和执行，帮我更快试错；但拍板、交付和担责，不外包。',
-    fixes: '被外部要求带着走',
-  },
-];
+// 「我给 AI 定的规则」：针对 Persona 里的坑，我让 AI 怎么配合我。文案在 src/data/profile.ts 里改。
+import { rules } from '../data/profile';
 ---
 <section id="ai-rules" class="section">
   <div class="container">

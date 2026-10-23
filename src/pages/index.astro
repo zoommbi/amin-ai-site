@@ -7,10 +7,30 @@ import AiRules from '../components/AiRules.astro';
 import JudgmentWall from '../components/JudgmentWall.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Icon from '../components/Icon.astro';
+import { SITE, personId, personJsonLd } from '../site';
 
 // 首页只讲「我是谁」；判断、项目、学习各有独立页面，从顶部导航进入
+const site = Astro.site!;
+const jsonLd = [
+  personJsonLd(site),
+  {
+    '@type': 'WebSite',
+    '@id': new URL('/#website', site).href,
+    name: SITE.name,
+    url: new URL('/', site).href,
+    description: SITE.description,
+    inLanguage: SITE.locale,
+    author: { '@id': personId(site) },
+  },
+  {
+    '@type': 'ProfilePage',
+    url: new URL('/', site).href,
+    name: `${SITE.name} · 我是谁`,
+    mainEntity: { '@id': personId(site) },
+  },
+];
 ---
-<Base>
+<Base jsonLd={jsonLd}>
   <div id="top"></div>
   <SiteHeader />
   <main>

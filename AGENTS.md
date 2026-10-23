@@ -34,6 +34,10 @@
     ├── styles/global.css      # 全局样式
     ├── styles/themes.css      # 配色方案（颜色变量只在这里定义）
     ├── config.ts              # 当前配色 SITE_THEME
+    ├── site.ts                # 网站身份：名称、一句话定位、关注方向（meta / JSON-LD / llms.txt 共用）
+    ├── data/profile.ts        # 首页「藤蔓」长处短处与「给 AI 的规则」文案
+    ├── judgments.ts           # 读取判断、判断网址
+    ├── llms.ts                # 生成 llms.txt / llms-full.txt（给 AI 读的纯文本版）
     ├── components/
     │   ├── SiteHeader.astro   # 顶部导航
     │   ├── Intro.astro        # 首页开头：一句话定位（文案在文件里）
@@ -47,7 +51,8 @@
     ├── content.config.ts      # 内容集合定义
     ├── content/judgments/     # 每条判断一个 .md 文件
     ├── content/maps/          # 每张知识地图一个 .yaml 文件
-    ├── pages/judgments/       # 全部判断（/judgments/）
+    ├── pages/judgments/       # 全部判断（/judgments/）+ 每条判断一页（/judgments/文件名/）
+    ├── pages/*.txt.ts, sitemap.xml.ts # robots.txt、sitemap、llms.txt，构建时自动生成
     ├── pages/projects/        # 项目进展（/projects/）
     ├── pages/learning/        # 学习索引页 + 每张地图一页（/learning/文件名/）
     └── data/projects.yaml     # 项目进展的唯一数据源
@@ -104,6 +109,11 @@ regions:              # 板块
 **绝不**从其他私有仓库或任何外部来源自动抓取。
 进度数字可以由开发 Agent 人工查看项目文档后估算，但必须先给阿旻确认再提交；
 提交内容、提交信息与 STATUS.md 中都不得出现项目仓库名或真实名称。
+
+### GEO（让 AI 搜索读懂、引用网站）
+
+robots.txt、sitemap、llms.txt、结构化数据都在构建时从内容自动生成，新增判断或地图不用另外改。
+换域名只改 `astro.config.mjs` 的 `site`。判断文件名就是它的永久网址，上线后不要再改名。
 
 ## 脱敏规则（必须遵守）
 
