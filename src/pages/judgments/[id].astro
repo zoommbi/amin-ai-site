@@ -1,0 +1,103 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { getJudgments, judgmentPath, fmtMonth } from '../../judgments';
+import { SITE, personId } from '../../site';
+
+// 每条判断一个独立页面：方便分享，也让搜索引擎和 AI 能直接引用某一条
+export async function getStaticPaths() {
+  const entries = await getJudgments();
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const site = Astro.site!;
+const url = new URL(judgmentPath(entry.id), site).href;
+// 摘要：取正文第一段，用于 meta description
+const firstPara = (entry.body ?? '').trim().split(/\n\s*\n/)[0].replace(/\s+/g, ' ');
+const description = firstPara.length > 120 ? `${firstPara.slice(0, 118)}…` : firstPara;
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    headline: entry.data.title,
+    description,
+    url,
+    mainEntityOfPage: url,
+    datePublished: entry.data.date.toISOString().slice(0, 10),
+    inLanguage: SITE.locale,
+    keywords: entry.data.tags.join(', '),
+    author: { '@id': personId(site) },
+    isPartOf: { '@type': 'CollectionPage', name: '我的判断', url: new URL('/judgments/', site).href },
+  },
+  {
+    '@type': 'Person',
+    '@id': personId(site),
+    name: SITE.name,
+    url: new URL('/', site).href,
+  },
+];
+---
+<Base title={`${entry.data.title} · ${SITE.name}`} description={description} type="article" jsonLd={jsonLd}>
+  <div id="top"></div>
+  <SiteHeader />
+  <main>
+    <article class="section judgment-page">
+      <div class="container">
+        <a class="back" href="/judgments/">← 全部判断</a>
+        <p class="meta">
+          <time datetime={entry.data.date.toISOString().slice(0, 7)}>{fmtMonth(entry.data.date)}</time>
+          {entry.data.tags.map((t) => <span>#{t}</span>)}
+          {entry.data.sample && <span>示例</span>}
+        </p>
+        <h1>{entry.data.title}</h1>
+        <div class="body glass"><Content /></div>
+        <p class="byline">—— {SITE.name}，在实践中形成、仍在修正的判断</p>
+      </div>
+    </article>
+  </main>
+  <SiteFooter />
+</Base>
+
+<style>
+  .judgment-page {
+    padding-top: 28px;
+  }
+  .container {
+    max-width: 720px;
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 10px;
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  h1 {
+    font-size: 1.6rem;
+    line-height: 1.45;
+    margin: 6px 0 18px;
+  }
+  .body {
+    padding: 4px 22px 20px;
+  }
+  .body :global(p) {
+    margin: 14px 0 0;
+  }
+  .byline {
+    margin: 18px 0 0;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+</style>

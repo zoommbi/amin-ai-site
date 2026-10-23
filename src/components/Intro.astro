@@ -1,14 +1,13 @@
 ---
-// 首页开头：我是谁。文案在这里改。
-const focuses = ['信息编排', 'AI 工作流', '产品研发', '教育', '小项目实践'];
+// 首页开头：我是谁。定位和关注方向在 src/site.ts 里改（结构化数据、llms.txt 共用）
+import { SITE } from '../site';
+const focuses = SITE.focuses;
 ---
 <section id="about" class="intro">
   <div class="container">
     <p class="hello">你好，我是</p>
     <h1>阿旻<span>AI</span></h1>
-    <p class="lead">
-      一个用 AI 重新组织工作的人。我关心的问题是：一个人，怎样获得过去只有组织才有的能力？
-    </p>
+    <p class="lead">{SITE.tagline}</p>
     <p class="sub">
       这个网站是我的名片：我是什么样的人、怎么和 AI 一起工作、形成了哪些判断，都公开在这里。
     </p>
