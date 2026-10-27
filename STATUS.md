@@ -32,6 +32,8 @@
 - 2026-10-23｜GEO（让 AI 搜索能读懂、引用网站）（草稿 PR）：robots.txt 明确欢迎各家 AI 爬虫、sitemap.xml、llms.txt / llms-full.txt（给 AI 读的纯文本版，含判断全文）、全站 canonical 与分享卡片 meta、JSON-LD（首页 Person/WebSite，每条判断 Article）；每条判断有了独立页面 /judgments/id/，弹窗底部加「这条判断的单独页面」链接；页面文案未改；public/_headers 给 txt/xml 标明 UTF-8，修复手机上 llms.txt 中文乱码｜下一步：阿旻已确认，合并上线；以后绑定域名时再检查 Cloudflare 的 AI 爬虫拦截设置
 - 2026-10-23｜按阿旻提供的 X 账号，在首页 Person 结构化数据（sameAs）、页面 rel="me" 和 llms.txt 里加上 https://x.com/mileshuang1997；页面上不显示｜下一步：其他平台账号有了再加
 
+- 2026-10-27｜新知识地图「从一家 AI 原生公司，到一个人的操作框架」（草稿 PR）：把 Anthropic 拆成治理、安全、算力、研究、商业五层，逐层对照个人做法，6 个板块 16 个知识块；地图支持可选的「对照条」（bridge 字段，紫色组织 → 青色个人，手机上下排，轻点右侧打开对应知识块）｜下一步：阿旻确认文案（尤其「现金流约 60%、实验约 25%、学习约 15%」是否公开）后合并
+
 ## 进行中
 
 - 第一批 5 项任务已完成并已上线（https://amin-ai-site.aminai.workers.dev），等待阿旻对「待决定」的反馈
@@ -52,6 +54,7 @@
 - [x] 「Anthropic 的 AI 哲学」地图内容（2026-10-21 阿旻确认上线）
 - [x] 线上地址：已改为 https://amin-ai-site.aminai.workers.dev（2026-10-18）
 - [x] 首页「我是谁」：藤蔓长处与短处、给 AI 的 4 条规则、3 条精选判断，去掉底部入口、判断改白色卡片（2026-10-22 阿旻确认上线）
+- [ ] 「AI 原生公司 → 个人操作框架」地图：文案与是否公开时间比例，阿旻确认后合并
 - [ ] GEO：以后绑定自己的域名时，到 Cloudflare 该域名的「AI Crawl Control」确认没有拦截 AI 爬虫、没有开启托管 robots.txt（现在用 workers.dev 地址，没有这些开关，不受影响）
 - [x] GEO：结构化数据加上 X 账号 @mileshuang1997（2026-10-23）；其他平台账号以后有再加到 src/site.ts 的 profiles
 - [x] 便签字体：不额外引入字体，保持系统字体（2026-10-20）

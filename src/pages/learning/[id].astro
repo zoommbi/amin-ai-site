@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import KnowledgeMap from '../../components/KnowledgeMap.astro';
+import MapBridge from '../../components/MapBridge.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 
 export async function getStaticPaths() {
@@ -33,6 +34,7 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10).replaceAll('-', '.');
         {map.data.sample && (
           <p class="sample-note glass">这是一张示例地图：结构可用，内容是占位，正式内容整理后替换。</p>
         )}
+        <MapBridge bridge={map.data.bridge} />
         <KnowledgeMap map={map} />
       </div>
     </section>

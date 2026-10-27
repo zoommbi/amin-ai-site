@@ -1,0 +1,145 @@
+---
+// 地图上方的「对照条」：左边参照对象（紫），右边我的版本（青），一行一对。
+// 数据来自地图 yaml 的 bridge 字段；右侧填了 node 时可轻点打开对应知识块（#id）
+interface Props {
+  bridge: { from: string; fromNote: string; to: string; toNote: string; node?: string }[];
+  fromLabel?: string;
+  toLabel?: string;
+}
+
+const { bridge, fromLabel = '组织怎么做', toLabel = '我怎么做' } = Astro.props;
+---
+{bridge.length > 0 && (
+  <div class="bridge" role="list" aria-label="对照：组织的做法与我的版本">
+    <div class="legend" aria-hidden="true">
+      <span class="dot from"></span>{fromLabel}
+      <span class="dot to"></span>{toLabel}
+    </div>
+    {bridge.map((b, i) => (
+      <div class="row" role="listitem">
+        <div class="cell from">
+          <strong><span class="num">{i + 1}</span>{b.from}</strong>
+          {b.fromNote && <span>{b.fromNote}</span>}
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+        {b.node ? (
+          <a class="cell to" href={`#${b.node}`}>
+            <strong>{b.to}</strong>
+            {b.toNote && <span>{b.toNote}</span>}
+          </a>
+        ) : (
+          <div class="cell to">
+            <strong>{b.to}</strong>
+            {b.toNote && <span>{b.toNote}</span>}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+)}
+
+<style>
+  .bridge {
+    display: grid;
+    gap: 10px;
+    margin: 4px 0 28px;
+  }
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin-bottom: 2px;
+  }
+  .legend .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+  }
+  .legend .dot.to {
+    margin-left: 10px;
+  }
+  .dot.from {
+    background: #afa9ec;
+  }
+  .dot.to {
+    background: #5dcaa5;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 22px 1.35fr;
+    align-items: stretch;
+    gap: 6px;
+  }
+  .cell {
+    display: block;
+    border-radius: 14px;
+    padding: 12px 14px;
+    border: 1px solid;
+    text-decoration: none;
+    min-width: 0;
+  }
+  .cell strong {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.98rem;
+    font-weight: 600;
+  }
+  .cell span {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+  .num {
+    display: inline-grid !important;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    margin: 0 !important;
+    border-radius: 6px;
+    font-size: 0.75rem !important;
+    background: #534ab7;
+    color: #fff;
+    flex: none;
+  }
+  .from {
+    background: #eeedfe;
+    border-color: #cecbf6;
+    color: #3c3489;
+  }
+  .from span {
+    color: #534ab7;
+  }
+  .to {
+    background: #e1f5ee;
+    border-color: #9fe1cb;
+    color: #085041;
+  }
+  .to span {
+    color: #0f6e56;
+  }
+  a.to:hover,
+  a.to:focus-visible {
+    border-color: #1d9e75;
+    outline: none;
+  }
+  .arrow {
+    display: grid;
+    place-items: center;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 480px) {
+    /* 手机：上下排，箭头朝下 */
+    .row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    .arrow {
+      transform: rotate(90deg);
+      height: 16px;
+    }
+  }
+</style>
