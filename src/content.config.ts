@@ -39,6 +39,18 @@ const maps = defineCollection({
     note: z.string().optional(), // 地图来源说明，显示在标题下方
     sample: z.boolean().default(false), // true 时显示"示例"，内容是占位
     draft: z.boolean().default(false),
+    // 可选「对照条」：显示在地图上方，左边是参照对象怎么做，右边是我的版本（每行一对）
+    bridge: z
+      .array(
+        z.object({
+          from: z.string(), // 左：参照对象的做法（短标题）
+          fromNote: z.string().default(''),
+          to: z.string(), // 右：我的版本（短标题）
+          toNote: z.string().default(''),
+          node: z.string().optional(), // 轻点右侧跳到哪个知识块（id）
+        }),
+      )
+      .default([]),
     regions: z.array(
       z.object({
         id: z.string(),
