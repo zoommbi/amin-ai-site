@@ -50,8 +50,10 @@
     │   └── SiteFooter.astro
     ├── content.config.ts      # 内容集合定义
     ├── content/judgments/     # 每条判断一个 .md 文件
+    ├── content/articles/      # 每篇长文一个 .md 文件
     ├── content/maps/          # 每张知识地图一个 .yaml 文件
     ├── pages/judgments/       # 全部判断（/judgments/）+ 每条判断一页（/judgments/文件名/）
+    ├── pages/articles/        # 文章列表 + 文章独立页面
     ├── pages/*.txt.ts, sitemap.xml.ts # robots.txt、sitemap、llms.txt，构建时自动生成
     ├── pages/projects/        # 项目进展（/projects/）
     ├── pages/learning/        # 学习索引页 + 每张地图一页（/learning/文件名/）
@@ -74,6 +76,13 @@ tags: [标签1, 标签2]
 
 详细说明（轻点卡片后展开显示）。
 ```
+
+### 新增一篇文章
+
+在 `src/content/articles/` 新建英文短名 `.md`，文件名即文章永久网址 `/articles/英文短名/`。
+文章使用 `title`、`description`、`date`、`tags`；未确认公开的文案设置 `draft: true`。
+文章和「我的判断」分开，不将长文拆成重复的判断卡片。事实、观点、推测分别表述，关键新闻事实附可核验来源。
+公开内容仍须脱敏并经阿旻审核，先开 PR，不直接推送 main。合并后 sitemap 和 llms.txt 自动收录。
 
 ### 新增一张知识地图（正在学习）
 

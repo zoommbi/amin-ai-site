@@ -2,6 +2,7 @@ import { getCollection } from 'astro:content';
 import { SITE } from './site';
 import { strengths, pitfalls, rules } from './data/profile';
 import { getJudgments, judgmentPath, fmtMonth } from './judgments';
+import { getArticles, articlePath, articleDate } from './articles';
 
 // 给 AI 读的纯文本版网站（llms.txt 规范：https://llmstxt.org）
 // full = false：简介 + 页面目录；full = true：再附上每条判断的全文
@@ -9,6 +10,7 @@ import { getJudgments, judgmentPath, fmtMonth } from './judgments';
 export async function buildLlmsTxt(site: URL, full: boolean) {
   const abs = (path: string) => new URL(path, site).href;
   const judgments = await getJudgments();
+  const articles = await getArticles();
   const maps = await getCollection('maps', ({ data }) => !data.draft && !data.sample);
 
   const out: string[] = [
@@ -60,6 +62,16 @@ export async function buildLlmsTxt(site: URL, full: boolean) {
         '',
         (j.body ?? '').trim(),
       );
+    }
+  }
+
+  out.push('', '## 文章', '', '- [全部文章](' + abs('/articles/') + ')：AI 原生组织、Agent 工作流与个人实践的长文');
+  for (const a of articles) {
+    out.push('- [' + a.data.title + '](' + abs(articlePath(a.id)) + ')：' + articleDate(a.data.date) + ' · ' + a.data.description);
+  }
+  if (full) {
+    for (const a of articles) {
+      out.push('', '### ' + a.data.title, '', articleDate(a.data.date) + ' · ' + abs(articlePath(a.id)), '', (a.body ?? '').trim());
     }
   }
 
