@@ -62,4 +62,16 @@ const maps = defineCollection({
   }),
 });
 
-export const collections = { judgments, maps };
+// 「文章」：Markdown 长文，独立于「我的判断」便签。
+const articles = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/articles' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.coerce.date(),
+    tags: z.array(z.string()).default([]),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { judgments, maps, articles };

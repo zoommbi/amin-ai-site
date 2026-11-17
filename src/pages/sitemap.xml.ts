@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { getJudgments, judgmentPath } from '../judgments';
+import { getArticles, articlePath, articleDate } from '../articles';
 
 // 站点地图：告诉搜索引擎和 AI 爬虫有哪些页面、什么时候更新过
 const day = (d: Date) => d.toISOString().slice(0, 10);
@@ -8,12 +9,15 @@ const day = (d: Date) => d.toISOString().slice(0, 10);
 export const GET: APIRoute = async ({ site }) => {
   const judgments = await getJudgments();
   const maps = await getCollection('maps', ({ data }) => !data.draft);
+  const articles = await getArticles();
   const latest = judgments[0] ? day(judgments[0].data.date) : undefined;
 
   const pages: { path: string; lastmod?: string }[] = [
     { path: '/', lastmod: latest },
     { path: '/judgments/', lastmod: latest },
     ...judgments.map((j) => ({ path: judgmentPath(j.id), lastmod: day(j.data.date) })),
+    { path: '/articles/', lastmod: articles[0] ? articleDate(articles[0].data.date) : undefined },
+    ...articles.map((a) => ({ path: articlePath(a.id), lastmod: articleDate(a.data.date) })),
     { path: '/projects/' },
     { path: '/learning/' },
     ...maps.map((m) => ({ path: `/learning/${m.id}/`, lastmod: day(m.data.updated) })),
