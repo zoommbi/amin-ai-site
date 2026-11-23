@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import { SITE } from './site';
+import { books } from './data/books';
 import { strengths, pitfalls, rules } from './data/profile';
 import { getJudgments, judgmentPath, fmtMonth } from './judgments';
 
@@ -66,6 +67,13 @@ export async function buildLlmsTxt(site: URL, full: boolean) {
   out.push('', '## 正在学习', '', `- [正在学习](${abs('/learning/')})：和 AI 一起梳理过的主题，整理成知识地图`);
   for (const m of maps) {
     out.push(`- [${m.data.title}](${abs(`/learning/${m.id}/`)})：${m.data.summary}`);
+  }
+
+  out.push('', '## 阅读清单', '', `- [阅读清单](${abs('/reading/')})：按主题整理图书，包含作者、出版信息和内容简介`);
+  if (full) {
+    for (const book of books) {
+      out.push(`- ${book.title}（${book.originalTitle}）：${book.category} · ${book.authors.join('、')} · ${book.published} · ${book.summary}`);
+    }
   }
 
   out.push(
