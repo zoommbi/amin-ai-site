@@ -16,6 +16,7 @@ export const GET: APIRoute = async ({ site }) => {
     ...judgments.map((j) => ({ path: judgmentPath(j.id), lastmod: day(j.data.date) })),
     { path: '/projects/' },
     { path: '/learning/' },
+    { path: '/reading/' },
     ...maps.map((m) => ({ path: `/learning/${m.id}/`, lastmod: day(m.data.updated) })),
   ];
 
