@@ -1,0 +1,170 @@
+---
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Icon from '../../components/Icon.astro';
+import { books, readingCategories, formatPublicationDate } from '../../data/books';
+
+const pageTitle = '阅读清单 · 阿旻AI';
+const pageDescription = '阿旻AI 的主题阅读清单：书名、作者、出版日期、简介，以及每本书值得读的具体问题。';
+---
+
+<Base title={pageTitle} description={pageDescription}>
+  <div id="top"></div>
+  <SiteHeader />
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h1 class="page-title">
+            <span class="icon-tile amber"><Icon name="book-open" /></span>
+            阅读清单
+          </h1>
+          <p>围绕现实问题选书。不是追求读了多少，而是弄清每本书能帮助解决什么。</p>
+          <p class="date-note">以下出版日期对应所列英文版本，不代表中文译本出版日期。</p>
+        </div>
+
+        {readingCategories.map((category) => {
+          const items = books.filter((book) => book.category === category);
+          return (
+            <section class="book-section" aria-label={category}>
+              <div class="category-head">
+                <h2>{category}</h2>
+                <span>{items.length} 本</span>
+              </div>
+              <div class="book-list">
+                {items.map((book) => (
+                  <article class="book-card glass">
+                    <div class="book-details">
+                      <h3>{book.title}</h3>
+                      <p class="original">{book.originalTitle}</p>
+                      <dl class="metadata">
+                        <div>
+                          <dt>作者</dt>
+                          <dd>{book.authors.join('、')}</dd>
+                        </div>
+                        <div>
+                          <dt>出版</dt>
+                          <dd><time datetime={book.published}>{formatPublicationDate(book.published)}</time> · {book.publisher}</dd>
+                        </div>
+                      </dl>
+                      <p class="summary">{book.summary}</p>
+                      <p class="reason"><strong>为什么读：</strong>{book.reason}</p>
+                      <a class="source" href={book.sourceUrl} target="_blank" rel="noopener noreferrer">
+                        核对出版信息 · {book.sourceLabel} ↗
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>
+
+<style>
+  .page-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.6rem;
+  }
+  .section-head p {
+    max-width: 720px;
+  }
+  .date-note {
+    font-size: 0.78rem !important;
+  }
+  .book-section {
+    margin-top: 28px;
+  }
+  .category-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 0 0 16px;
+  }
+  .category-head h2 {
+    font-size: 1.2rem;
+  }
+  .category-head span {
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+  }
+  .book-list {
+    display: grid;
+    gap: 16px;
+  }
+  .book-card {
+    padding: 22px;
+    min-width: 0;
+  }
+  .book-details {
+    min-width: 0;
+  }
+  .book-card h3 {
+    font-size: 1.22rem;
+    overflow-wrap: anywhere;
+  }
+  .original {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin: 6px 0 14px;
+    overflow-wrap: anywhere;
+  }
+  .metadata {
+    margin: 0 0 14px;
+    display: grid;
+    gap: 6px;
+    font-size: 0.85rem;
+  }
+  .metadata > div {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 8px;
+  }
+  dt {
+    color: var(--ink-soft);
+  }
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  .summary {
+    margin: 0;
+    line-height: 1.75;
+    font-size: 0.94rem;
+  }
+  .reason {
+    margin: 12px 0 0;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .reason strong {
+    color: var(--ink);
+  }
+  .source {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    text-underline-offset: 3px;
+  }
+  @media (min-width: 768px) {
+    .page-title {
+      font-size: 1.85rem;
+    }
+    .book-card {
+      padding: 26px 30px;
+    }
+  }
+  @media (max-width: 360px) {
+    .book-card {
+      padding: 16px;
+    }
+  }
+</style>

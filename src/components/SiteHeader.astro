@@ -4,6 +4,7 @@ const links = [
   { href: '/judgments/', label: '判断' },
   { href: '/projects/', label: '项目' },
   { href: '/learning/', label: '学习' },
+  { href: '/reading/', label: '书单' },
 ];
 
 // 当前页面的导航高亮
@@ -76,17 +77,30 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     color: var(--ink);
     outline: none;
   }
-  @media (max-width: 360px) {
+  /* 手机用字标进入首页，导航保留四个独立板块，避免窄屏横向滚动。 */
+  @media (max-width: 640px) {
     .bar {
       padding-left: 14px;
     }
     nav a {
-      padding: 6px 5px;
+      padding: 6px 6px;
       font-size: 0.85rem;
     }
-    /* 太窄放不下四个入口：「我是谁」和点字标回首页是一回事 */
     nav a:first-child {
       display: none;
+    }
+  }
+  @media (max-width: 360px) {
+    .bar {
+      gap: 6px;
+      padding-left: 12px;
+    }
+    nav {
+      gap: 1px;
+    }
+    nav a {
+      padding: 6px 5px;
+      font-size: 0.82rem;
     }
   }
 </style>
