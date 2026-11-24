@@ -1,16 +1,26 @@
 ---
 // 首页开头：我是谁。定位和关注方向在 src/site.ts 里改（结构化数据、llms.txt 共用）
+// 改版：借鉴 coss.com/ui 的聚焦式首屏——大标题 + 一句话 + 说明，线稿点缀；
+// 关注方向移到下方并弱化，不强占首屏。文案与字标均未改动。
 import { SITE } from '../site';
+import HeroSketch from './HeroSketch.astro';
 const focuses = SITE.focuses;
 ---
 <section id="about" class="intro">
   <div class="container">
-    <p class="hello">你好，我是</p>
-    <h1>阿旻<span>AI</span></h1>
-    <p class="lead">{SITE.tagline}</p>
-    <p class="sub">
-      这个网站是我的名片：我是什么样的人、怎么和 AI 一起工作、形成了哪些判断，都公开在这里。
-    </p>
+    <div class="hero">
+      <div class="copy">
+        <p class="hello">你好，我是</p>
+        <h1>阿旻<span>AI</span></h1>
+        <p class="lead">{SITE.tagline}</p>
+        <p class="sub">
+          这个网站是我的名片：我是什么样的人、怎么和 AI 一起工作、形成了哪些判断，都公开在这里。
+        </p>
+      </div>
+      <div class="art" aria-hidden="true">
+        <HeroSketch />
+      </div>
+    </div>
     <ul class="focus" aria-label="我关注的方向">
       {focuses.map((f) => <li>{f}</li>)}
     </ul>
@@ -19,7 +29,16 @@ const focuses = SITE.focuses;
 
 <style>
   .intro {
-    padding: 48px 0 8px;
+    padding: 44px 0 8px;
+  }
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+  }
+  .art {
+    display: none;
   }
   .hello {
     margin: 0;
@@ -32,7 +51,7 @@ const focuses = SITE.focuses;
     font-weight: 700;
     font-size: 2.6rem;
     letter-spacing: 0.02em;
-    margin: 4px 0 12px;
+    margin: 4px 0 14px;
   }
   h1 span {
     color: var(--accent);
@@ -41,38 +60,53 @@ const focuses = SITE.focuses;
   .lead {
     font-size: 1.15rem;
     margin: 0 0 10px;
-    max-width: 30em;
+    max-width: 22em;
+    line-height: 1.55;
   }
   .sub {
-    margin: 0 0 20px;
+    margin: 0;
     color: var(--ink-soft);
-    max-width: 34em;
+    max-width: 30em;
+    font-size: 0.95rem;
   }
   .focus {
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: 28px 0 0;
+    padding: 14px 0 0;
+    border-top: 1px solid var(--line-soft);
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
   }
   .focus li {
-    font-size: 0.85rem;
-    padding: 4px 12px;
+    font-size: 0.8rem;
+    padding: 3px 10px;
+    border: 1px solid var(--line-soft);
     border-radius: 999px;
-    background: var(--chip-bg);
-    box-shadow: var(--chip-shadow);
     color: var(--ink-soft);
   }
   @media (min-width: 768px) {
     .intro {
-      padding: 88px 0 16px;
+      padding: 80px 0 16px;
+    }
+    .hero {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+      gap: 48px;
+    }
+    .art {
+      display: block;
     }
     h1 {
       font-size: 3.4rem;
     }
     .lead {
       font-size: 1.3rem;
+    }
+    .sub {
+      font-size: 1rem;
+    }
+    .focus {
+      margin-top: 36px;
     }
   }
 </style>

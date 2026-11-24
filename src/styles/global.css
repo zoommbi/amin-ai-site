@@ -162,6 +162,11 @@ h3 {
 .section {
   padding: 56px 0;
   scroll-margin-top: 64px;
+  border-top: 1px solid var(--line-soft);
+}
+/* 首个板块紧跟首屏，不需要顶部分隔线 */
+main > .section:first-of-type {
+  border-top: 0;
 }
 
 .section-head {
