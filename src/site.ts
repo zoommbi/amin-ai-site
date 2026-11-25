@@ -1,18 +1,13 @@
-// 网站身份信息：页面 meta、结构化数据（JSON-LD）、llms.txt 共用这一份。
-// 换域名时改 astro.config.mjs 的 site，这里的网址会跟着变。
-
+// 网站身份信息：meta、结构化数据与 llms.txt 共用。
 export const SITE = {
   name: '阿旻AI',
-  description: '阿旻AI 的个人网站：AI 工作流、教育与小项目实践。',
-  // 一句话定位，和首页开头保持一致
-  tagline: '一个用 AI 重新组织工作的人。我关心的问题是：一个人，怎样获得过去只有组织才有的能力？',
-  focuses: ['信息编排', 'AI 工作流', '产品研发', '教育', '小项目实践'],
+  description: '阿旻AI：用 AI 解决真实问题，分享实践、工具、工作流与独立思考。',
+  tagline: '用 AI，把想法变成现实。记录解决真实问题的实践、思考与方法。',
+  focuses: ['AI 实践', '工具与工作流', '真实需求', '商业验证', '独立思考'],
   locale: 'zh-CN',
-  // 公开的社交账号：写进结构化数据（sameAs）和 rel="me"，让 AI 确认是同一个人
   profiles: ['https://x.com/mileshuang1997'],
 };
 
-// 首页「我是谁」的 Person 结构化数据，其他页面用 @id 引用它
 export const personId = (site: URL) => new URL('/#person', site).href;
 
 export const personJsonLd = (site: URL) => ({
