@@ -77,12 +77,9 @@ export async function buildLlmsTxt(site: URL, full: boolean) {
     }
   }
 
-  out.push(
-    '',
-    '## Optional',
-    '',
-    full ? '' : `- [全文版](${abs('/llms-full.txt')})：包含首页简介和每条判断的全文`,
-  );
+  if (!full) {
+    out.push('', '## 其他', '', `- [全文版](${abs('/llms-full.txt')})：包含首页简介和每条判断的全文`);
+  }
 
   return out.join('\n').trimEnd() + '\n';
 }
