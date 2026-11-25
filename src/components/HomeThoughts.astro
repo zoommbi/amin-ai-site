@@ -1,0 +1,117 @@
+---
+import { getJudgments, judgmentPath, fmtMonth } from '../judgments';
+
+const featured = (await getJudgments({ featured: true })).slice(0, 3);
+---
+
+{featured.length > 0 && (
+  <section class="thoughts-section" id="thoughts">
+    <div class="container thought-layout">
+      <div class="thought-intro">
+        <p class="kicker">THINKING / 我的思考</p>
+        <h2>让实践，<br />长出判断。</h2>
+        <p>不是为了不断发表观点，而是把实际经历中的问题、假设与思考整理出来，接受时间和现实检验。</p>
+        <a href="/judgments/" class="view-all">全部判断 <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="thought-list">
+        {featured.map((entry) => (
+          <a class="thought-row" href={judgmentPath(entry.id)}>
+            <div class="thought-meta">
+              <time datetime={entry.data.date.toISOString().slice(0, 10)}>{fmtMonth(entry.data.date)}</time>
+              <span>{entry.data.tags.slice(0, 2).join(' · ')}</span>
+            </div>
+            <div class="thought-title">
+              <h3>{entry.data.title}</h3>
+              <span class="arrow" aria-hidden="true">↗</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .thoughts-section {
+    padding: clamp(70px, 9vw, 128px) 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .thought-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 42px;
+  }
+  .kicker {
+    margin: 0 0 20px;
+    color: var(--accent);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+  }
+  .thought-intro h2 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.8rem);
+    letter-spacing: -.045em;
+    line-height: 1.2;
+  }
+  .thought-intro p:not(.kicker) {
+    max-width: 20em;
+    color: var(--ink-soft);
+    margin: 20px 0 0;
+    font-size: .96rem;
+  }
+  .view-all {
+    display: inline-flex;
+    gap: 18px;
+    color: var(--ink);
+    font-weight: 650;
+    text-decoration: none;
+    margin-top: 24px;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 5px;
+  }
+  .thought-list {
+    border-top: 1px solid var(--line-soft);
+  }
+  .thought-row {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-soft);
+    padding: 20px 0 24px;
+    transition: padding-left .2s ease;
+  }
+  .thought-row:hover { padding-left: 8px; }
+  .thought-row:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .thought-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    color: var(--ink-soft);
+    font-size: .79rem;
+  }
+  .thought-title {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 13px;
+  }
+  .thought-title h3 {
+    font-size: clamp(1.18rem, 2vw, 1.65rem);
+    font-weight: 600;
+    letter-spacing: -.025em;
+    line-height: 1.45;
+  }
+  .arrow {
+    color: var(--accent);
+    font-size: 1.35rem;
+    flex: none;
+  }
+  @media (min-width: 840px) {
+    .thought-layout { grid-template-columns: .85fr 1.15fr; gap: 8%; }
+  }
+</style>
