@@ -26,7 +26,7 @@
 
 :root {
   --radius: 20px;
-  --maxw: 960px;
+  --maxw: 1120px;
   --gutter: 16px;
   --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
@@ -51,7 +51,7 @@ body {
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 16px;
-  line-height: 1.75;
+  line-height: 1.7;
   overflow-x: hidden;
 }
 

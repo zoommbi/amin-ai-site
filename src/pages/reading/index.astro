@@ -34,7 +34,7 @@ const pageDescription = '阿旻AI 的主题阅读清单：书名、作者、出�
               </div>
               <div class="book-list">
                 {items.map((book) => (
-                  <article class="book-card glass">
+                  <article class="book-card glass" id={book.id}>
                     <div class="book-details">
                       <h3>{book.title}</h3>
                       <p class="original">{book.originalTitle}</p>
@@ -97,19 +97,30 @@ const pageDescription = '阿旻AI 的主题阅读清单：书名、作者、出�
     color: var(--ink-soft);
     font-size: 0.82rem;
   }
+  /* 书单采用书目式排版，不再把每本书画成相同的白色卡片。 */
   .book-list {
     display: grid;
-    gap: 16px;
+    gap: 0;
+    border-top: 1px solid var(--line-soft);
   }
-  .book-card {
-    padding: 22px;
+  .book-card,
+  .book-card.glass {
+    padding: 24px 0 28px;
     min-width: 0;
+    scroll-margin-top: 90px;
+    border: 0;
+    border-bottom: 1px solid var(--line-soft);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
   }
+  .book-card.glass::after { display: none; }
   .book-details {
     min-width: 0;
   }
   .book-card h3 {
-    font-size: 1.22rem;
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
     overflow-wrap: anywhere;
     padding-bottom: 12px;
     border-bottom: 1px solid var(--line-soft);
@@ -162,13 +173,13 @@ const pageDescription = '阿旻AI 的主题阅读清单：书名、作者、出�
     .page-title {
       font-size: 1.85rem;
     }
-    .book-card {
-      padding: 26px 30px;
+    .book-card, .book-card.glass {
+      padding: 32px 0 36px;
     }
   }
   @media (max-width: 360px) {
-    .book-card {
-      padding: 16px;
+    .book-card, .book-card.glass {
+      padding: 20px 0 26px;
     }
   }
 </style>

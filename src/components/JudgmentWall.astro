@@ -123,10 +123,12 @@ const notes = await Promise.all(
 
 <style>
   /* 和首页其他卡片统一：白色玻璃卡片 */
+  /* 全部判断采用可浏览的文字目录，不再堆叠同款卡片；保留原弹窗交互。 */
   .wall {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
+    gap: 0;
+    border-top: 1px solid var(--line-soft);
   }
   .note {
     all: unset;
@@ -134,29 +136,28 @@ const notes = await Promise.all(
     display: flex;
     flex-direction: column;
     gap: 8px;
-    padding: 16px 18px;
+    padding: 22px 0;
     color: var(--ink);
     cursor: pointer;
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease;
   }
-  /* all: unset 会清掉 .glass 的样式，这里补回来 */
+  /* all: unset 会清掉基础样式，这里建立编辑式列表的点击区域。 */
   .note.glass {
     position: relative;
-    isolation: isolate;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius);
-    box-shadow: var(--glass-shadow);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
+    display: flex;
+    border: 0;
+    border-bottom: 1px solid var(--line-soft);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
   }
+  .note.glass::after { display: none; }
   .note:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      var(--glass-shadow),
-      0 16px 34px -12px var(--shadow-tint);
+    transform: translateX(6px);
+    box-shadow: none;
   }
   .note:focus-visible {
     outline: 2px solid var(--accent);
@@ -174,8 +175,8 @@ const notes = await Promise.all(
   }
   .note-title {
     flex: 1;
-    font-size: 1.02rem;
-    line-height: 1.55;
+    font-size: clamp(1.12rem, 2vw, 1.5rem);
+    line-height: 1.5;
     font-weight: 600;
   }
   .note-meta {
@@ -290,13 +291,12 @@ const notes = await Promise.all(
   }
   @media (min-width: 768px) {
     .wall {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
-      align-items: stretch;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
     }
     .note {
-      padding: 20px 22px;
-      min-height: 150px;
+      padding: 24px 0;
+      min-height: 0;
     }
     .sheet {
       max-width: 560px;

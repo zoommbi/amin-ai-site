@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import Persona from '../../components/Persona.astro';
+import AiRules from '../../components/AiRules.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+---
+
+<Base title="关于我 · 阿旻AI" description="阿旻AI：关于我的工作方式、长处和容易踩的坑，以及我如何让 AI 帮助执行。">
+  <SiteHeader />
+  <main>
+    <section class="about-intro">
+      <div class="container">
+        <p class="eyebrow">ABOUT / 关于我</p>
+        <h1>与 AI 协作，<br /><span>把事情做成。</span></h1>
+        <p>我相信持续解决真实问题，比展示掌握多少工具更重要。这里记录我如何认识自己，以及如何让 AI 辅助判断与执行。</p>
+      </div>
+    </section>
+    <Persona />
+    <AiRules />
+  </main>
+  <SiteFooter />
+</Base>
+
+<style>
+  .about-intro { padding: clamp(64px, 9vw, 116px) 0 44px; }
+  .eyebrow { color: var(--accent); font-size: .75rem; font-weight: 700; letter-spacing: .1em; margin: 0 0 22px; }
+  h1 { font-size: clamp(2.6rem, 5vw, 4.8rem); letter-spacing: -.045em; line-height: 1.2; margin: 0; }
+  h1 span { color: var(--accent); }
+  .about-intro p:last-child { max-width: 40em; font-size: 1.05rem; color: var(--ink-soft); margin: 25px 0 0; }
+</style>

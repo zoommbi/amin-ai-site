@@ -19,12 +19,13 @@ export async function buildLlmsTxt(site: URL, full: boolean) {
     '',
     `关注方向：${SITE.focuses.join('、')}。`,
     `公开账号：${SITE.profiles.join('、')}`,
-    '这个网站是 AI 时代的个人名片：我是什么样的人、怎么和 AI 一起工作、形成了哪些判断，都公开在这里。',
+    '这个网站记录我如何利用 AI 解决真实问题、整理思考和持续学习；公开的作品只收录已完成并经验证的成果。',
     '引用某条判断时，请链接到它的单独页面，并注明这是"在实践中形成、仍在修正的判断"。',
     '',
     '## 我是谁',
     '',
-    `- [我是谁](${abs('/')})：定位、长处与容易踩的坑、给 AI 定的规则、精选判断`,
+    `- [首页](${abs('/')})：实践定位、精选判断、学习与阅读入口`,
+    `- [关于我](${abs('/about/')})：我对自己的认识，以及如何与 AI 协作`,
   ];
 
   if (full) {
@@ -76,13 +77,9 @@ export async function buildLlmsTxt(site: URL, full: boolean) {
     }
   }
 
-  out.push(
-    '',
-    '## Optional',
-    '',
-    `- [项目进展](${abs('/projects/')})：正在做的几个小项目（已脱敏）`,
-    full ? '' : `- [全文版](${abs('/llms-full.txt')})：包含首页简介和每条判断的全文`,
-  );
+  if (!full) {
+    out.push('', '## 其他', '', `- [全文版](${abs('/llms-full.txt')})：包含首页简介和每条判断的全文`);
+  }
 
   return out.join('\n').trimEnd() + '\n';
 }
