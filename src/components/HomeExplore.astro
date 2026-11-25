@@ -26,7 +26,7 @@ const selectedBooks = books.slice(0, 3);
       <div class="explore-column">
         <div class="column-title"><h3>阅读清单</h3><a href="/reading/">全部书目 ↗</a></div>
         {selectedBooks.map((book) => (
-          <a class="simple-link" href="/reading/">
+          <a class="simple-link" href={`/reading/#${book.id}`}>
             <span>{book.title}</span><span aria-hidden="true">↗</span>
           </a>
         ))}
