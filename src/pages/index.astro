@@ -2,14 +2,11 @@
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import Intro from '../components/Intro.astro';
-import Persona from '../components/Persona.astro';
-import AiRules from '../components/AiRules.astro';
-import JudgmentWall from '../components/JudgmentWall.astro';
+import HomeThoughts from '../components/HomeThoughts.astro';
+import HomeExplore from '../components/HomeExplore.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import Icon from '../components/Icon.astro';
 import { SITE, personId, personJsonLd } from '../site';
 
-// 首页只讲「我是谁」；判断、项目、学习各有独立页面，从顶部导航进入
 const site = Astro.site!;
 const jsonLd = [
   personJsonLd(site),
@@ -25,43 +22,18 @@ const jsonLd = [
   {
     '@type': 'ProfilePage',
     url: new URL('/', site).href,
-    name: `${SITE.name} · 我是谁`,
+    name: `${SITE.name} · 个人网站`,
     mainEntity: { '@id': personId(site) },
   },
 ];
 ---
+
 <Base jsonLd={jsonLd}>
-  <div id="top"></div>
   <SiteHeader />
   <main>
     <Intro />
-    <Persona />
-    <AiRules />
-
-    <section id="judgments" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>
-            <span class="icon-tile amber"><Icon name="lightbulb" /></span>
-            几条判断
-          </h2>
-          <p>在实践中形成、仍在修正的看法。轻点卡片看详细说明。</p>
-        </div>
-        <JudgmentWall featured />
-        <p class="more"><a href="/judgments/">看全部判断 →</a></p>
-      </div>
-    </section>
+    <HomeThoughts />
+    <HomeExplore />
   </main>
   <SiteFooter />
 </Base>
-
-<style>
-  .more {
-    margin: 20px 0 0;
-    text-align: right;
-  }
-  .more a {
-    text-decoration: none;
-    font-weight: 600;
-  }
-</style>
