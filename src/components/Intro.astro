@@ -1,112 +1,213 @@
 ---
-// 首页开头：我是谁。定位和关注方向在 src/site.ts 里改（结构化数据、llms.txt 共用）
-// 改版：借鉴 coss.com/ui 的聚焦式首屏——大标题 + 一句话 + 说明，线稿点缀；
-// 关注方向移到下方并弱化，不强占首屏。文案与字标均未改动。
 import { SITE } from '../site';
-import HeroSketch from './HeroSketch.astro';
-const focuses = SITE.focuses;
 ---
-<section id="about" class="intro">
+
+<section id="about" class="intro" aria-label="网站介绍">
   <div class="container">
-    <div class="hero">
-      <div class="copy">
-        <p class="hello">你好，我是</p>
-        <h1>阿旻<span>AI</span></h1>
-        <p class="lead">{SITE.tagline}</p>
-        <p class="sub">
-          这个网站是我的名片：我是什么样的人、怎么和 AI 一起工作、形成了哪些判断，都公开在这里。
-        </p>
-      </div>
-      <div class="art" aria-hidden="true">
-        <HeroSketch />
-      </div>
+    <div class="eyebrow">
+      <span class="eyebrow-mark" aria-hidden="true"></span>
+      阿旻AI / 真实问题、实践与思考
     </div>
-    <ul class="focus" aria-label="我关注的方向">
-      {focuses.map((f) => <li>{f}</li>)}
-    </ul>
+
+    <div class="hero">
+      <div class="hero-copy">
+        <p class="hello">你好，我是阿旻。</p>
+        <h1>用 AI，<br /><span>把想法变成现实。</span></h1>
+        <p class="lead">
+          我关注怎样用 AI 解决真实问题、打造工具与工作流，并把实践过程中形成的经验和判断记录下来。
+        </p>
+        <div class="hero-actions">
+          <a class="primary-action" href="/judgments/">阅读我的思考 <span aria-hidden="true">↗</span></a>
+          <a class="secondary-action" href="/about/">更多关于我 <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <aside class="method" aria-label="我的实践方式">
+        <p class="method-label">我的实践方式 / A WORKING METHOD</p>
+        <div class="method-item">
+          <span class="method-dot" aria-hidden="true"></span>
+          <div>
+            <strong>从问题出发</strong>
+            <small>而不是从工具出发</small>
+          </div>
+        </div>
+        <div class="method-item">
+          <span class="method-dot" aria-hidden="true"></span>
+          <div>
+            <strong>用 AI 动手验证</strong>
+            <small>先做出最小可用的结果</small>
+          </div>
+        </div>
+        <div class="method-item">
+          <span class="method-dot" aria-hidden="true"></span>
+          <div>
+            <strong>只沉淀可靠的成果</strong>
+            <small>让经验经得起实际使用</small>
+          </div>
+        </div>
+        <p class="method-footer">{SITE.name} <span aria-hidden="true">↗</span></p>
+      </aside>
+    </div>
+
+    <div class="hero-bottom">
+      <span>AI PRACTICE</span>
+      <span>INDEPENDENT THINKING</span>
+      <span>REAL-WORLD DELIVERY</span>
+    </div>
   </div>
 </section>
 
 <style>
   .intro {
-    padding: 44px 0 8px;
+    padding: clamp(56px, 9vw, 128px) 0 0;
+  }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+  }
+  .eyebrow-mark {
+    display: inline-block;
+    width: 25px;
+    height: 2px;
+    background: var(--accent);
   }
   .hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    align-items: center;
-    gap: 8px;
-  }
-  .art {
-    display: none;
+    gap: 42px;
+    align-items: end;
+    padding: clamp(30px, 5vw, 64px) 0 68px;
   }
   .hello {
-    margin: 0;
+    margin: 0 0 20px;
     color: var(--ink-soft);
-    font-family: var(--font-hand);
-    font-size: 1.15rem;
+    font-size: clamp(0.95rem, 1.5vw, 1.15rem);
   }
   h1 {
-    font-family: var(--font-wordmark);
-    font-weight: 700;
-    font-size: 2.6rem;
-    letter-spacing: 0.02em;
-    margin: 4px 0 14px;
+    margin: 0;
+    font-size: clamp(2.8rem, 7.3vw, 6.4rem);
+    letter-spacing: -0.055em;
+    line-height: 1.13;
+    font-weight: 750;
+    text-wrap: balance;
   }
   h1 span {
     color: var(--accent);
-    margin-left: 0.06em;
   }
   .lead {
-    font-size: 1.15rem;
-    margin: 0 0 10px;
-    max-width: 22em;
-    line-height: 1.55;
-  }
-  .sub {
-    margin: 0;
-    color: var(--ink-soft);
-    max-width: 30em;
-    font-size: 0.95rem;
-  }
-  .focus {
-    list-style: none;
+    max-width: 34em;
     margin: 28px 0 0;
-    padding: 14px 0 0;
+    line-height: 1.8;
+    font-size: clamp(1rem, 1.7vw, 1.18rem);
+    color: var(--ink-soft);
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 30px;
+  }
+  .hero-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    min-height: 48px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: transform .2s ease, background .2s ease;
+  }
+  .hero-actions a:hover {
+    transform: translateY(-2px);
+  }
+  .hero-actions a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .primary-action {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .secondary-action {
+    padding-left: 0 !important;
+    color: var(--ink);
+  }
+  .method {
+    padding: clamp(22px, 3.2vw, 36px);
+    background: var(--accent-soft);
+    border-radius: 12px;
+    min-width: 0;
+  }
+  .method-label {
+    margin: 0 0 32px;
+    font-size: 0.69rem;
+    letter-spacing: .095em;
+    color: var(--accent);
+    font-weight: 650;
+  }
+  .method-item {
+    display: grid;
+    grid-template-columns: 14px minmax(0, 1fr);
+    gap: 16px;
+    padding: 18px 0;
     border-top: 1px solid var(--line-soft);
+  }
+  .method-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 13px;
+  }
+  .method-item strong {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 650;
+    letter-spacing: -.025em;
+  }
+  .method-item small {
+    display: block;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    font-size: .86rem;
+  }
+  .method-footer {
+    display: flex;
+    justify-content: space-between;
+    color: var(--accent);
+    font-size: .8rem;
+    margin: 28px 0 0;
+  }
+  .hero-bottom {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-  }
-  .focus li {
-    font-size: 0.8rem;
-    padding: 3px 10px;
-    border: 1px solid var(--line-soft);
-    border-radius: 999px;
+    gap: 10px 28px;
+    padding: 15px 0;
+    border-top: 1px solid var(--line-soft);
+    font-size: .69rem;
+    font-weight: 600;
+    letter-spacing: .09em;
     color: var(--ink-soft);
   }
-  @media (min-width: 768px) {
-    .intro {
-      padding: 80px 0 16px;
-    }
+  @media (min-width: 930px) {
     .hero {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-      gap: 48px;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, .8fr);
+      gap: 6%;
     }
-    .art {
-      display: block;
-    }
-    h1 {
-      font-size: 3.4rem;
-    }
-    .lead {
-      font-size: 1.3rem;
-    }
-    .sub {
-      font-size: 1rem;
-    }
-    .focus {
-      margin-top: 36px;
-    }
+    .method { align-self: stretch; }
+  }
+  @media (max-width: 480px) {
+    .hero { gap: 32px; padding-bottom: 40px; }
+    .hero-actions { gap: 8px 18px; }
+    .method-label { margin-bottom: 15px; }
+    .method-item { padding: 12px 0; }
   }
 </style>
