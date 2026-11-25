@@ -1,23 +1,22 @@
 ---
 const links = [
-  { href: '/', label: '我是谁' },
-  { href: '/judgments/', label: '判断' },
-  { href: '/projects/', label: '项目' },
+  { href: '/judgments/', label: '思考' },
   { href: '/learning/', label: '学习' },
   { href: '/reading/', label: '书单' },
+  { href: '/about/', label: '关于' },
 ];
 
-// 当前页面的导航高亮
 const path = Astro.url.pathname;
-const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const isCurrent = (href: string) => path.startsWith(href);
 ---
+
 <header class="site-header">
   <div class="container">
-    <div class="bar glass">
-      <a class="brand" href="/">阿旻<span>AI</span></a>
-      <nav aria-label="页面导航">
-        {links.map((l) => (
-          <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>
+    <div class="bar">
+      <a class="brand" href="/" aria-label="阿旻AI，返回首页">阿旻<span>AI</span></a>
+      <nav aria-label="主要导航">
+        {links.map((link) => (
+          <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>{link.label}</a>
         ))}
       </nav>
     </div>
@@ -25,82 +24,55 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 </header>
 
 <style>
-  /* 悬浮的玻璃导航条 */
   .site-header {
     position: sticky;
     top: 0;
-    z-index: 10;
-    padding-top: 10px;
+    z-index: 30;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line-soft);
   }
   .bar {
+    min-height: 72px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    height: 52px;
-    padding: 0 8px 0 18px;
-    border-radius: 999px;
+    gap: 16px;
   }
   .brand {
     font-family: var(--font-wordmark);
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
+    line-height: 1;
     color: var(--ink);
     text-decoration: none;
     white-space: nowrap;
   }
-  .brand span {
-    color: var(--accent);
-    margin-left: 0.06em;
-  }
-  nav {
-    display: flex;
-    gap: 4px;
-    min-width: 0;
-  }
+  .brand span { color: var(--accent); margin-left: .06em; }
+  nav { display: flex; gap: clamp(6px, 1.8vw, 24px); flex: none; }
   nav a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 8px;
     color: var(--ink-soft);
     text-decoration: none;
-    font-size: 0.9rem;
-    padding: 6px 8px;
-    border-radius: 999px;
+    font-size: .9rem;
+    font-weight: 550;
     white-space: nowrap;
+    border-bottom: 2px solid transparent;
   }
-  nav a[aria-current='page'] {
-    color: var(--accent);
-    font-weight: 600;
+  nav a[aria-current='page'] { color: var(--ink); border-color: var(--accent); }
+  nav a:hover { color: var(--ink); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  @media (max-width: 480px) {
+    .bar { min-height: 62px; gap: 6px; }
+    .brand { font-size: 1.09rem; }
+    nav { gap: 0; }
+    nav a { padding: 8px 6px; font-size: .83rem; }
   }
-  nav a:hover,
-  nav a:focus-visible {
-    background: var(--chip-bg);
-    box-shadow: var(--chip-shadow);
-    color: var(--ink);
-    outline: none;
-  }
-  /* 手机用字标进入首页，导航保留四个独立板块，避免窄屏横向滚动。 */
-  @media (max-width: 640px) {
-    .bar {
-      padding-left: 14px;
-    }
-    nav a {
-      padding: 6px 6px;
-      font-size: 0.85rem;
-    }
-    nav a:first-child {
-      display: none;
-    }
-  }
-  @media (max-width: 360px) {
-    .bar {
-      gap: 6px;
-      padding-left: 12px;
-    }
-    nav {
-      gap: 1px;
-    }
-    nav a {
-      padding: 6px 5px;
-      font-size: 0.82rem;
-    }
+  @media (max-width: 350px) {
+    .brand { font-size: 1rem; }
+    nav a { padding: 7px 5px; font-size: .8rem; }
   }
 </style>
