@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import { books } from '../data/books';
+
+const maps = (await getCollection('maps', ({ data }) => !data.draft && !data.sample))
+  .slice(0, 3);
+const selectedBooks = books.slice(0, 3);
+---
+
+<section class="explore-section" id="explore">
+  <div class="container">
+    <div class="explore-head">
+      <p class="kicker">LEARNING / 持续学习</p>
+      <h2>把好奇心，变成理解。</h2>
+      <p>一边动手实践，一边向优秀的思想和方法学习。</p>
+    </div>
+    <div class="explore-columns">
+      <div class="explore-column">
+        <div class="column-title"><h3>知识地图</h3><a href="/learning/">全部地图 ↗</a></div>
+        {maps.map((map) => (
+          <a class="simple-link" href={`/learning/${map.id}/`}>
+            <span>{map.data.title}</span><span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+      <div class="explore-column">
+        <div class="column-title"><h3>阅读清单</h3><a href="/reading/">全部书目 ↗</a></div>
+        {selectedBooks.map((book) => (
+          <a class="simple-link" href="/reading/">
+            <span>{book.title}</span><span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .explore-section { padding: clamp(70px, 9vw, 120px) 0; }
+  .kicker { margin: 0 0 16px; font-size: .75rem; letter-spacing: .1em; font-weight: 700; color: var(--accent); }
+  .explore-head h2 { font-size: clamp(1.9rem, 4vw, 3.5rem); line-height: 1.25; letter-spacing: -.04em; }
+  .explore-head > p:last-child { color: var(--ink-soft); margin: 16px 0 0; }
+  .explore-columns { display: grid; grid-template-columns: minmax(0, 1fr); gap: 38px; margin-top: 44px; }
+  .column-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+  .column-title h3 { font-size: 1.12rem; font-weight: 700; }
+  .column-title a { color: var(--accent); font-size: .81rem; text-decoration: none; white-space: nowrap; }
+  .simple-link {
+    display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    padding: 18px 0; color: var(--ink); text-decoration: none;
+    border-top: 1px solid var(--line-soft); font-size: .97rem;
+  }
+  .simple-link span:last-child { color: var(--accent); }
+  .simple-link:hover span:first-child, .column-title a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .simple-link:focus-visible, .column-title a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  @media (min-width: 800px) {
+    .explore-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10%; }
+  }
+</style>
