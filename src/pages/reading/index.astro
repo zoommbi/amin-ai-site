@@ -34,7 +34,7 @@ const pageDescription = '阿旻AI 的主题阅读清单：书名、作者、出�
               </div>
               <div class="book-list">
                 {items.map((book) => (
-                  <article class="book-card glass">
+                  <article class="book-card glass" id={book.id}>
                     <div class="book-details">
                       <h3>{book.title}</h3>
                       <p class="original">{book.originalTitle}</p>
